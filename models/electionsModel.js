@@ -10,6 +10,9 @@ const Elections = {
             [election_type],
             callback
         )
+    },
+    deleteElection: (id, callback) => {
+        db.query(`DELETE FROM election WHERE ID=${id}`, callback);
     }
 }
 

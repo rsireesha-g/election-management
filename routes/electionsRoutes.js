@@ -4,5 +4,6 @@ const ElectionsController = require('../controllers/electionsController');
 
 router.get('/', ElectionsController.getAllElections);
 router.post('/', ElectionsController.createElection);
+router.delete('/:id', ElectionsController.deleteElection);
 
 module.exports = router;

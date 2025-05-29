@@ -8,6 +8,9 @@ const Candidates = {
         db.query(`INSERT INTO candidates (candidate_name, aadhar_id, DOB, gender, email, contact_no, address,election_type) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type], callback)
+    },
+    deleteCandidate: (id, callback) => {
+        db.query(`DELETE FROM candidates WHERE ID=${id}`, callback);
     }
 }
 

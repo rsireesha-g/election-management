@@ -9,6 +9,12 @@ const Voters = {
                  VALUES (?, ?, ?, ?, ?, ?, ?)`;
         const values = [voter_name, aadhar_id, DOB, gender, email, contact_no, address];
         db.query(sql, values, callback);
+    },
+    // updateVoter: () => {
+
+    // },
+    deleteVoter: (id, callback) => {
+        db.query(`DELETE FROM Voters WHERE ID=${id}`, callback);
     }
 }
 

@@ -22,5 +22,15 @@ exports.createElection = (req, res) => {
     });
 }
 
+exports.deleteElection = (req, res) => {
+    const { id } = req.params;
+    Elections.deleteElection(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Election type deleted successfully',
+            voter: req.body
+        });
+    })
+}
 
 

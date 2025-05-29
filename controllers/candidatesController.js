@@ -26,4 +26,14 @@ exports.createCandidate = (req, res) => {
     });
 };
 
+exports.deleteCandidate = (req, res) => {
+    const { id } = req.params;
+    Candidates.deleteCandidate(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Candidate deleted successfully',
+            voter: req.body
+        });
+    })
+}
 

@@ -27,5 +27,22 @@ exports.createVoter = (req, res) => {
     });
 };
 
+// exports.updateVoter = (req, res) => {
+//     Voters.updateVoter(() => {
+
+//     })
+// }
+
+exports.deleteVoter = (req, res) => {
+    const { id } = req.params;
+    Voters.deleteVoter(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Voter deleted successfully',
+            voter: req.body
+        });
+    })
+}
+
 
 

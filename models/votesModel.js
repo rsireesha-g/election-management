@@ -9,6 +9,9 @@ const Votes = {
             `INSERT INTO votes (voter_id, candidate_id, election_id) VALUES(? ,? ,?)`,
             [voter_id, candidate_id, election_id],
             callback)
+    },
+    deleteVote: (id, callback) => {
+        db.query(`DELETE FROM Votes WHERE ID=${id}`, callback);
     }
 }
 

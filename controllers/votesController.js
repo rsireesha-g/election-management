@@ -26,3 +26,13 @@ exports.createVote = (req, res) => {
     });
 }
 
+exports.deleteVote = (req, res) => {
+    const { id } = req.params;
+    Votes.deleteVote(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Vote deleted successfully',
+            voter: req.body
+        });
+    })
+}
