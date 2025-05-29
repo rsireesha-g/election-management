@@ -36,3 +36,21 @@ exports.deleteVote = (req, res) => {
         });
     })
 }
+
+exports.updateVote = (req, res) => {
+    const data = req.body;
+    const { id } = req.params;
+
+    for (key in data) {
+        if (!data[key]) {
+            return res.status(400).json({ error: `Missing ${key}` })
+        }
+    }
+    Votes.updateVote(id, data, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Vote updated successfully',
+            voter: req.body
+        });
+    })
+}

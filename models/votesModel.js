@@ -12,7 +12,12 @@ const Votes = {
     },
     deleteVote: (id, callback) => {
         db.query(`DELETE FROM Votes WHERE ID=${id}`, callback);
-    }
+    },
+    updateVote: (id, data, callback) => {
+        const { voter_id, candidate_id, election_id } = data;
+        const sql = `UPDATE votes SET voter_id = ?, candidate_id = ?, election_id = ? WHERE ID = ?`;
+        db.query(sql, [voter_id, candidate_id, election_id, id], callback);
+    },
 }
 
 module.exports = Votes;

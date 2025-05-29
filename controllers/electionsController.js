@@ -1,3 +1,4 @@
+const Candidates = require('../models/candidatesModel');
 const Elections = require('../models/electionsModel');
 
 exports.getAllElections = (req, res) => {
@@ -33,4 +34,19 @@ exports.deleteElection = (req, res) => {
     })
 }
 
+exports.updateElection = (req, res) => {
+    const { id } = req.params;
+    const { election_type } = req.body;
+    if (!election_type) {
+        return res.status(400).json({ error: `Missing election_type` })
+    }
+
+    Elections.updateElection(id, election_type, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Election data updated successfully',
+            voter: req.body
+        });
+    })
+}
 

@@ -11,7 +11,12 @@ const Candidates = {
     },
     deleteCandidate: (id, callback) => {
         db.query(`DELETE FROM candidates WHERE ID=${id}`, callback);
-    }
+    },
+    updateCandidate: (id, data, callback) => {
+        const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type } = data;
+        const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=? WHERE id = ?`;
+        db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, id], callback);
+    },
 }
 
 module.exports = Candidates;

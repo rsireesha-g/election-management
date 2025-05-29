@@ -13,6 +13,9 @@ const Elections = {
     },
     deleteElection: (id, callback) => {
         db.query(`DELETE FROM election WHERE ID=${id}`, callback);
+    },
+    updateElection: (id, election_type, callback) => {
+        db.query(`UPDATE election SET election_type=? WHERE ID=?`, [election_type, id], callback)
     }
 }
 

@@ -27,11 +27,24 @@ exports.createVoter = (req, res) => {
     });
 };
 
-// exports.updateVoter = (req, res) => {
-//     Voters.updateVoter(() => {
+exports.updateVoter = (req, res) => {
+    const data = req.body;
+    const { id } = req.params;
 
-//     })
-// }
+    for (key in data) {
+        if (!data[key]) {
+            return res.status(400).json({ error: `Missing ${key}` })
+        }
+    }
+    Voters.updateVoter(id, data, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Voter updated successfully',
+            voter: req.body
+        });
+    })
+}
+
 
 exports.deleteVoter = (req, res) => {
     const { id } = req.params;

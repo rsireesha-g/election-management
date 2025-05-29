@@ -37,3 +37,20 @@ exports.deleteCandidate = (req, res) => {
     })
 }
 
+exports.updateCandidate = (req, res) => {
+    const data = req.body;
+    const { id } = req.params;
+
+    for (key in data) {
+        if (!data[key]) {
+            return res.status(400).json({ error: `Missing ${key}` })
+        }
+    }
+    Candidates.updateCandidate(id, data, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Candidate data updated successfully',
+            voter: req.body
+        });
+    })
+}
