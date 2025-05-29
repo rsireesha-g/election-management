@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Voters = require('../models/votersModel');
+const VotersController = require('../controllers/votersController');
 
-router.get('/', (req, res) => {
-    Voters.getAll((err, rows) => {
-        if (err) res.status(500).send(err);
-        else res.json(rows, 'rows');
-    });
-});
+router.get('/', VotersController.getAllVoters);
 
 module.exports = router;

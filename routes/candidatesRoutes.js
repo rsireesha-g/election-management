@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Candidates = require("../models/candidatesModel");
+const CandidatesController = require("../controllers/candidatesController");
 
-router.get("/", (req, res) => {
-    Candidates.getAll((err, rows) => {
-        if (err) res.status(500).send(err)
-        else res.json(rows, 'rows')
-    })
-});
+router.get("/", CandidatesController.getAllCandidates);
 
 
 module.exports = router;

@@ -15,11 +15,10 @@ app.use('/candidates', candidatesRoute);
 app.use('/votes', votesRoute);
 app.use('/elections', electionsRoute);
 
-db.query('SHOW TABLES', (err, results) => {
-    if (err) throw err;
-    console.log('Tables:', results);
-});
-
+// db.query('SHOW TABLES', (err, results) => {
+//     if (err) throw err;
+//     console.log('Tables:', results);
+// });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
