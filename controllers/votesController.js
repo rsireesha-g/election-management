@@ -7,3 +7,22 @@ exports.getAllVotes = (req, res) => {
     })
 };
 
+
+exports.createVote = (req, res) => {
+    const data = req.body;
+    const { voter_id, candidate_id, election_id } = data;
+
+    for (key in data) {
+        if (!data[key]) {
+            return res.status(400).json({ error: `Missing ${key}` })
+        }
+    }
+    Votes.createVote(voter_id, candidate_id, election_id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({
+            message: 'Vote created successfully',
+            voter: req.body
+        });
+    });
+}
+
