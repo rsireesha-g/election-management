@@ -1,11 +1,15 @@
 const mysql = require('mysql2');
 
+const user = process.env.MYSQL_USERNAME;
+const password = process.env.MYSQL_PASSWORD;
+const database = process.env.MY_DATABASE;
+
 const db = mysql.createConnection(
     {
         host: 'localhost',
-        user: process.env.MYSQL_USERNAME || 'root',
-        password: process.env.MYSQL_PASSWORD || 'siriSQL@1',
-        database: process.env.MY_DATABASE || 'electionmanagement'
+        user,
+        password,
+        database
     }
 )
 
@@ -16,5 +20,10 @@ db.connect((err) => {
     }
     console.log('Connected to MySQL as ID ' + db.threadId);
 });
+
+// db.query('SHOW TABLES', (err, results) => {
+//     if (err) throw err;
+//     console.log('Tables:', results);
+// });
 
 module.exports = db;
