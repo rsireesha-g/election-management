@@ -18,6 +18,9 @@ const Votes = {
         const sql = `UPDATE votes SET voter_id = ?, candidate_id = ?, election_id = ? WHERE ID = ?`;
         db.query(sql, [voter_id, candidate_id, election_id, id], callback);
     },
+    getSingleVote: (id, callback) => {
+        db.query(`SELECT * FROM votes WHERE ID=${id}`, callback)
+    }
 }
 
 module.exports = Votes;

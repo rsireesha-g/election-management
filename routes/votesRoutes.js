@@ -8,4 +8,6 @@ router.delete('/:id', VotesController.deleteVote);
 router.put('/:id', VotesController.updateVote);
 
 
+router.get('/:id', VotesController.getSingleVote);
+
 module.exports = router;

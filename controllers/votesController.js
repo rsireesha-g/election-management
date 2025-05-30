@@ -54,3 +54,12 @@ exports.updateVote = (req, res) => {
         });
     })
 }
+
+exports.getSingleVote = (req, res) => {
+    const { id } = req.params;
+
+    Votes.getSingleVote(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(200).send(result)
+    })
+}

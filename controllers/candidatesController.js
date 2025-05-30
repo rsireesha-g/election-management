@@ -54,3 +54,12 @@ exports.updateCandidate = (req, res) => {
         });
     })
 }
+
+exports.getSingleCandidate = (req, res) => {
+    const { id } = req.params;
+
+    Candidates.getSingleCandidate(id, (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(200).send(result)
+    })
+}

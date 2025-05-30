@@ -59,3 +59,13 @@ exports.deleteVoter = (req, res) => {
 
 
 
+// single voter
+exports.getSingleVoter = (req, res) => {
+    const { id } = req.params;
+
+    Voters.getSingleVoter(id, (err, result) => {
+        console.log(result)
+        if (err) res.status(500).send(err);
+        res.status(200).send(result);
+    });
+};

@@ -17,6 +17,9 @@ const Candidates = {
         const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=? WHERE id = ?`;
         db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, id], callback);
     },
+    getSingleCandidate: (id, callback) => {
+        db.query(`SELECT * FROM candidates WHERE ID=${id}`, callback)
+    }
 }
 
 module.exports = Candidates;
