@@ -3,7 +3,7 @@ const Candidates = require("../models/candidatesModel");
 exports.getAllCandidates = (req, res) => {
     Candidates.getAll((err, data) => {
         if (err) res.status(500).send(err)
-        else res.send(data, 'data')
+        else res.status(200).send(data, 'data')
     })
 };
 
@@ -55,11 +55,32 @@ exports.updateCandidate = (req, res) => {
     })
 }
 
-exports.getSingleCandidate = (req, res) => {
+exports.getCandidateById = (req, res) => {
     const { id } = req.params;
 
-    Candidates.getSingleCandidate(id, (err, result) => {
+    Candidates.getCandidateById(id, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.status(200).send(result)
+    })
+}
+
+
+exports.getCandidateNameByElectionType = (req, res) => {
+    const { election_type } = req.params;
+
+    Candidates.getCandidateNameByElectionType(election_type, (err, result) => {
+        if (err) res.status(500).send(err);
+        // res.status(200).send(result.map((i) => i.candidate_name))
+        res.status(200).send(result)
+    })
+};
+
+
+exports.getCandidatesCountByElectionType = (req, res) => {
+    const { election_type } = req.params;
+    console.log('second')
+    Candidates.getCandidatesCountByElectionType(election_type, (err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result);
     })
 }

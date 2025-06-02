@@ -17,8 +17,16 @@ const Candidates = {
         const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=? WHERE id = ?`;
         db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, id], callback);
     },
-    getSingleCandidate: (id, callback) => {
+    getCandidateById: (id, callback) => {
         db.query(`SELECT * FROM candidates WHERE ID=${id}`, callback)
+    },
+
+    getCandidateNameByElectionType: (election_type, callback) => {
+        db.query(`SELECT candidate_name FROM candidates WHERE election_type=?`, [election_type], callback);
+    },
+    getCandidatesCountByElectionType: (election_type, callback) => {
+        console.log('first')
+        db.query(`SELECT COUNT(*) AS 'No of Candidates',election_type FROM candidates GROUP BY election_type`, [election_type], callback)
     }
 }
 

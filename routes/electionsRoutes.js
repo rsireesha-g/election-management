@@ -7,7 +7,7 @@ router.post('/', ElectionsController.createElection);
 router.delete('/:id', ElectionsController.deleteElection);
 router.put('/:id', ElectionsController.updateElection);
 
-router.get('/:id', ElectionsController.getSingleElection);
+router.get('/:id', ElectionsController.getSingleElectionType);
 
 
 module.exports = router;

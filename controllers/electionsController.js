@@ -50,10 +50,10 @@ exports.updateElection = (req, res) => {
     })
 }
 
-exports.getSingleElection = (req, res) => {
+exports.getSingleElectionType = (req, res) => {
     const { id } = req.params;
 
-    Elections.getSingleElection(id, (err, result) => {
+    Elections.getSingleElectionType(id, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.status(200).send(result)
     })
