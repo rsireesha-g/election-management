@@ -20,6 +20,16 @@ const Votes = {
     },
     getSingleVote: (id, callback) => {
         db.query(`SELECT * FROM votes WHERE ID=${id}`, callback)
+    },
+    getCountByCandidate: (callback) => {
+        const sql = `SELECT COUNT(*) AS 'Count',candidate_id  FROM Votes GROUP BY candidate_id`;
+        db.query(sql, callback);
+    },
+    getCountByCandidateForParliament: (callback) => {
+        const sql = `SELECT COUNT(*)  AS 'No Of Votes' FROM Votes 
+        WHERE election_id IN  
+        (SELECT ID FROM election WHERE election_type='Parliament')`;
+        db.query(sql, callback);
     }
 }
 

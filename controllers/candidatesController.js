@@ -70,8 +70,8 @@ exports.getCandidateNameByElectionType = (req, res) => {
 
     Candidates.getCandidateNameByElectionType(election_type, (err, result) => {
         if (err) res.status(500).send(err);
-        // res.status(200).send(result.map((i) => i.candidate_name))
-        res.status(200).send(result)
+        res.status(200).send(result.map((i) => i.candidate_name))
+        // res.status(200).send(result)
     })
 };
 
@@ -82,5 +82,12 @@ exports.getCandidatesCountByElectionType = (req, res) => {
     Candidates.getCandidatesCountByElectionType(election_type, (err, result) => {
         if (err) res.status(500).send(err);
         res.status(200).send(result);
+    })
+}
+
+exports.getCandidatesAgedForParliament = (req, res) => {
+    Candidates.getCandidatesAgedForParliament((err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result.map((i) => i.candidate_name));
     })
 }

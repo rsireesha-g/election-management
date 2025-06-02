@@ -7,6 +7,10 @@ router.post('/', VotersController.createVoter);
 router.put('/:id', VotersController.updateVoter);
 router.delete('/:id', VotersController.deleteVoter);
 
-router.get('/:id', VotersController.getSingleVoter);
+// router.get('/:id', VotersController.getSingleVoter);
+
+router.get("/femaleVotersCountByCandidateId/:candidate_id", VotersController.getFemaleVotersCountByCandidateId);
+router.get('/parliamentElection/genderBasedVoterCount', VotersController.getGenderBasedVoterCount);
+router.get("/parliamentElection/maleVoters", VotersController.getMaleVotersForParliamentElection);
 
 module.exports = router;

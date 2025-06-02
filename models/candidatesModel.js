@@ -26,8 +26,12 @@ const Candidates = {
     },
     getCandidatesCountByElectionType: (election_type, callback) => {
         console.log('first')
-        db.query(`SELECT COUNT(*) AS 'No of Candidates',election_type FROM candidates GROUP BY election_type`, [election_type], callback)
-    }
+        db.query(`SELECT COUNT(*) AS 'CandidatesCount',election_type FROM candidates GROUP BY election_type `, [election_type], callback)
+    },
+    getCandidatesAgedForParliament: (callback) => {
+        const sql = `SELECT candidate_name FROM Candidates WHERE TIMESTAMPDIFF(YEAR, DOB, CURDATE())>50`;
+        db.query(sql, callback)
+    },
 }
 
 module.exports = Candidates;

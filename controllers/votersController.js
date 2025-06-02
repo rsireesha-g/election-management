@@ -64,8 +64,32 @@ exports.getSingleVoter = (req, res) => {
     const { id } = req.params;
 
     Voters.getSingleVoter(id, (err, result) => {
-        console.log(result)
         if (err) res.status(500).send(err);
         res.status(200).send(result);
     });
 };
+
+
+exports.getFemaleVotersCountByCandidateId = (req, res) => {
+    const { candidate_id } = req.params;
+
+
+    Voters.getFemaleVotersCountByCandidateId(candidate_id, (err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result);
+    })
+}
+
+exports.getGenderBasedVoterCount = (req, res) => {
+    Voters.getGenderBasedVoterCount((err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result);
+    })
+}
+
+exports.getMaleVotersForParliamentElection = (req, res) => {
+    Voters.getMaleVotersForParliamentElection((err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result.map((i) => i.voter_name));
+    })
+}

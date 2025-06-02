@@ -19,7 +19,27 @@ const Voters = {
         db.query(`DELETE FROM Voters WHERE ID=${id}`, callback);
     },
     getSingleVoter: (id, callback) => {
-        db.query(`SELECT * FROM voters WHERE ID=${id}`, callback)
+        db.query(`SELECT * FROM voters WHERE ID=?`, [id], callback)
+    },
+    getFemaleVotersCountByCandidateId: (candidate_id, callback) => {
+        db.query(`
+            SELECT voter_name FROM Voters WHERE gender='Female' AND ID IN (
+            SELECT voter_id FROM Votes WHERE candidate_id=?
+            )`,
+            [candidate_id], callback)
+    },
+    getGenderBasedVoterCount: (callback) => {
+        const sql = `SELECT COUNT(*) AS 'No Of Candidates',gender FROM Candidates WHERE election_type='Parliament' GROUP BY gender`;
+        db.query(sql, callback)
+    },
+    getMaleVotersForParliamentElection: (callback) => {
+        const sql = `
+        SELECT voter_name FROM Voters 
+        WHERE gender='Male' 
+        AND TIMESTAMPDIFF(YEAR, DOB, CURDATE())>50 
+        AND ID IN (
+        SELECT voter_id FROM Votes WHERE election_id=1)`;
+        db.query(sql, callback)
     }
 }
 

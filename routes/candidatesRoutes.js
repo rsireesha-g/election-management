@@ -9,6 +9,7 @@ router.put('/:id', CandidatesController.updateCandidate);
 router.get("/:id", CandidatesController.getCandidateById);
 
 router.get("/election/:election_type", CandidatesController.getCandidateNameByElectionType);
-router.get("/countByElection/:election_type", CandidatesController.getCandidatesCountByElectionType)
+router.get("/countByElection/:election_type", CandidatesController.getCandidatesCountByElectionType);
+router.get("/parliament/aged", CandidatesController.getCandidatesAgedForParliament)
 
 module.exports = router; 
