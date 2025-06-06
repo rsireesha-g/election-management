@@ -10,7 +10,11 @@ const Candidates = {
             [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type], callback)
     },
     deleteCandidate: (id, callback) => {
-        db.query(`DELETE FROM candidates WHERE ID=${id}`, callback);
+        db.query(`DELETE FROM Votes WHERE candidate_id=${id}`, (err) => {
+            if (err) return callback(err)
+
+            db.query(`DELETE FROM candidates WHERE ID=${id}`, callback);
+        })
     },
     updateCandidate: (id, data, callback) => {
         const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type } = data;

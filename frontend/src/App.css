@@ -1,6 +1,6 @@
 .main-component{
   width:1000vw;
-  max-width: 1400px;
+  max-width: min(1400px,100%);
 
 }
 .h1,h2,h3,h4,h5,h6,p,div{
@@ -9,13 +9,10 @@
 }
 
 .header{
-  
-}
-
-.listing-component{
-
-}
-
-.list-name{
-
+  width: 100vw;
+  padding: 1rem;
+  background-color: blanchedalmond;
+  color:blue;
+  font-size: var(--xxxl);
+  text-align: center;
 }

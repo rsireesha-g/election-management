@@ -1,0 +1,24 @@
+.listing-component{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:1rem;
+  margin: auto;
+  border:1px solid red;
+  justify-content: center;
+  align-self: center;
+}
+
+.list{
+  width: 100px;
+  height: fit-content;
+  padding: 1rem;
+  border-radius: 6px;
+  border:1px solid #666;
+  text-align: center;
+  font-size: var(--l);
+}
+.active-list{
+  background-color: #666666ad;
+  font-weight: bold;
+}

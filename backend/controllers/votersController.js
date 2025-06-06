@@ -17,12 +17,15 @@ exports.createVoter = (req, res) => {
             return res.status(400).json({ error: `Missing ${key}` })
         }
     }
-
+    console.log(res.error)
     Voters.createVoter(voter_name, aadhar_id, DOB, gender, email, contact_no, address, (err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
+        if (err) {
+            console.log(err)
+            return res.status(500).json({ error: err.message });
+        }
         res.status(201).json({
             message: 'Voter created successfully',
-            voter: req.body
+            voter: result
         });
     });
 };
@@ -37,6 +40,7 @@ exports.updateVoter = (req, res) => {
         }
     }
     Voters.updateVoter(id, data, (err, result) => {
+        console.log(err ? err : '')
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json({
             message: 'Voter updated successfully',

@@ -1,0 +1,317 @@
+openapi: 3.1.0
+info: 
+   title: Election Management API
+   description: api's to manage election process
+   version: 1.0.0
+servers:
+   - url: http://localhost:5000
+ 
+components:
+  schemas:
+    voter:
+      type: object
+      properties:
+       ID:
+        type: integer
+       voter_name:
+        type: string
+       aadhar_id:
+        type: string
+       DOB:
+        type: string
+        format: date
+        example: 1990-01-01
+       gender:
+        type: string
+       email:
+        type: string
+       contact_no:
+        type: string
+       address:
+        type: string
+    candidate:
+      type: object
+      properties:
+       ID:
+        type: integer
+       candidate_name:
+        type: string
+       aadhar_id:
+        type: string
+       DOB:
+        type: string
+        format: date
+        example: 1990-01-01
+       gender:
+        type: string
+       email:
+        type: string
+       contact_no:
+        type: string
+       address:
+        type: string
+       election_type:
+        type: string
+    election:
+      type: object
+      properties:
+       ID:
+        type: integer
+       election_type:
+        type: string
+    vote:
+      type: object
+      properties:
+       ID:
+        type: integer
+       voter_id:
+        type: integer
+       candidate_id:
+        type: integer
+       election_id:
+        type: integer
+paths:
+  /voters:
+    get:
+      summary: Get a list of all the voters participating in election
+      responses:
+        '200':
+          description: A JSON array of voter objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/voter'
+    post:
+        summary: Create a voter 
+        description: adds a voter data object into the voters table
+        requestBody:
+          required: true
+          content:
+           application/json:
+            schema:
+              $ref: '#/components/schemas/voter'
+        responses:
+          '201':
+            description: Voter created succesfully message
+          '400':
+            description: Invalid input data
+  /voters/{id}:
+    put:
+      summary: Update a voter details
+      description: A voter object is updated based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/voter'
+      responses:
+        '201':
+          description: Voter updated successfully
+        '400':
+          description: Invalid voter details input
+    delete:
+      summary: Delete a voter
+      description: A voter object is deleted based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Voter deleted successfully
+        '400':
+          description: Invalid id
+  /candidates:
+    get:
+      summary: Get a list of all the candidates participating in election
+      responses:
+        '200':
+          description: A JSON array of candidate objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/candidate'
+    post:
+        summary: Create a candidate
+        description: adds a candidate data object into the voters table
+        requestBody:
+          required: true
+          content:
+           application/json:
+            schema:
+              $ref: '#/components/schemas/candidate'
+        responses:
+          '201':
+            description: CAndidate created succesfully message
+          '400':
+            description: Invalid input data
+  /candidates/{id}:
+    put:
+      summary: Update a candidate details
+      description: A candidate object is updated based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/candidate'
+      responses:
+        '201':
+          description: Candidate updated successfully
+        '400':
+          description: Invalid candidate details input
+    delete:
+      summary: Delete a candidate
+      description: A candidate object is deleted based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Candidate deleted successfully
+        '400':
+          description: Invalid id    
+  /elections:
+    get:
+      summary: Get a list of all types of election
+      responses:
+        '200':
+          description: A JSON array of elction objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/election'
+    post:
+        summary: Create a election type 
+        description: adds a election data object into the elections table
+        requestBody:
+          required: true
+          content:
+           application/json:
+            schema:
+              $ref: '#/components/schemas/election'
+        responses:
+          '201':
+            description: Election created succesfully message
+          '400':
+            description: Invalid input data
+  /elections/{id}:
+    put:
+      summary: Update a election details
+      description: A election object is updated based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/election'
+      responses:
+        '201':
+          description: Election updated successfully
+        '400':
+          description: Invalid election details input
+    delete:
+      summary: Delete a election
+      description: A election object is deleted based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Election deleted successfully
+        '400':
+          description: Invalid id
+  /votes:
+    get:
+      summary: Get a list of all the votes
+      responses:
+        '200':
+          description: A JSON array of vote objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vote'
+    post:
+        summary: Create a vote 
+        description: adds a vote data object into the votes table
+        requestBody:
+          required: true
+          content:
+           application/json:
+            schema:
+              $ref: '#/components/schemas/vote'
+        responses:
+          '201':
+            description: Vote created succesfully message
+          '400':
+            description: Invalid input data
+  /votes/{id}:
+    put:
+      summary: Update a vote details
+      description: A vote object is updated based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vote'
+      responses:
+        '201':
+          description: Vote updated successfully
+        '400':
+          description: Invalid vote details input
+    delete:
+      summary: Delete a vote
+      description: A vote object is deleted based on the id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Vote deleted successfully
+        '400':
+          description: Invalid id

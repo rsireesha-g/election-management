@@ -16,7 +16,10 @@ const Voters = {
         db.query(sql, [voter_name, aadhar_id, DOB, gender, email, contact_no, address, id], callback);
     },
     deleteVoter: (id, callback) => {
-        db.query(`DELETE FROM Voters WHERE ID=${id}`, callback);
+        db.query(`DELETE FROM Votes WHERE voter_id=${id}`, (err) => {
+            if (err) return callback(err)
+            db.query(`DELETE FROM Voters WHERE ID=${id}`, callback);
+        });
     },
     getSingleVoter: (id, callback) => {
         db.query(`SELECT * FROM voters WHERE ID=?`, [id], callback)
