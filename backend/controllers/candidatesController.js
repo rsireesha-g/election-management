@@ -77,9 +77,7 @@ exports.getCandidateNameByElectionType = (req, res) => {
 
 
 exports.getCandidatesCountByElectionType = (req, res) => {
-    const { election_type } = req.params;
-    console.log('second')
-    Candidates.getCandidatesCountByElectionType(election_type, (err, result) => {
+    Candidates.getCandidatesCountByElectionType((err, result) => {
         if (err) res.status(500).send(err);
         res.status(200).send(result);
     })
@@ -89,5 +87,20 @@ exports.getCandidatesAgedForParliament = (req, res) => {
     Candidates.getCandidatesAgedForParliament((err, result) => {
         if (err) res.status(500).send(err);
         res.status(200).send(result.map((i) => i.candidate_name));
+    })
+}
+
+exports.getCountByCandidate = (req, res) => {
+    Candidates.getCountByCandidate((err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(200).send(result)
+    })
+}
+
+
+exports.getCountByCandidateForParliament = (req, res) => {
+    Candidates.getCountByCandidateForParliament((err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(200).send(result)
     })
 }

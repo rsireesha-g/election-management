@@ -24,10 +24,11 @@ const Voters = {
     getSingleVoter: (id, callback) => {
         db.query(`SELECT * FROM voters WHERE ID=?`, [id], callback)
     },
-    getFemaleVotersCountByCandidateId: (candidate_id, callback) => {
+    getFemaleVotersByCandidateId: (candidate_id, callback) => {
         db.query(`
-            SELECT voter_name FROM Voters WHERE gender='Female' AND ID IN (
-            SELECT voter_id FROM Votes WHERE candidate_id=?
+            SELECT voter_name FROM Voters WHERE gender='Female' 
+            AND ID IN (
+             SELECT voter_id FROM Votes WHERE candidate_id=?
             )`,
             [candidate_id], callback)
     },

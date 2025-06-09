@@ -65,16 +65,4 @@ exports.getSingleVote = (req, res) => {
 }
 
 
-exports.getCountByCandidate = (req, res) => {
-    Votes.getCountByCandidate((err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.status(200).send(result)
-    })
-}
 
-exports.getCountByCandidateForParliament = (req, res) => {
-    Votes.getCountByCandidateForParliament((err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.status(200).send(result)
-    })
-}

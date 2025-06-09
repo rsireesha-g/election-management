@@ -28,14 +28,32 @@ const Candidates = {
     getCandidateNameByElectionType: (election_type, callback) => {
         db.query(`SELECT candidate_name FROM candidates WHERE election_type=?`, [election_type], callback);
     },
-    getCandidatesCountByElectionType: (election_type, callback) => {
-        console.log('first')
-        db.query(`SELECT COUNT(*) AS 'CandidatesCount',election_type FROM candidates GROUP BY election_type `, [election_type], callback)
+    getCandidatesCountByElectionType: (callback) => {
+        db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.ID) AS 'count'  FROM Candidates 
+        JOIN votes ON candidates.ID=votes.candidate_id
+        JOIN election ON election.id=votes.election_id
+        GROUP BY votes.election_id,candidates.candidate_name`, callback)
     },
     getCandidatesAgedForParliament: (callback) => {
         const sql = `SELECT candidate_name FROM Candidates WHERE TIMESTAMPDIFF(YEAR, DOB, CURDATE())>50`;
         db.query(sql, callback)
     },
+    getCountByCandidate: (callback) => {
+        const sql = `
+        SELECT candidates.candidate_name,COUNT(votes.ID) AS 'count'  
+        FROM Candidates 
+        JOIN votes ON candidates.ID=votes.candidate_id
+        GROUP BY candidates.candidate_name`;
+        db.query(sql, callback);
+    },
+
+    getCountByCandidateForParliament: (callback) => {
+        const sql = `SELECT candidates.candidate_name,COUNT(votes.ID)  AS 'count' 
+                      FROM candidates
+                     JOIN votes WHERE  election_id=1
+                     GROUP BY candidate_name`;
+        db.query(sql, callback);
+    }
 }
 
 module.exports = Candidates;

@@ -74,13 +74,13 @@ exports.getSingleVoter = (req, res) => {
 };
 
 
-exports.getFemaleVotersCountByCandidateId = (req, res) => {
+exports.getFemaleVotersByCandidateId = (req, res) => {
     const { candidate_id } = req.params;
 
 
-    Voters.getFemaleVotersCountByCandidateId(candidate_id, (err, result) => {
+    Voters.getFemaleVotersByCandidateId(candidate_id, (err, result) => {
         if (err) res.status(500).send(err);
-        res.status(200).send(result);
+        res.status(200).send(result?.map((i) => i.voter_name));
     })
 }
 

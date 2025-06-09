@@ -10,7 +10,5 @@ router.put('/:id', VotesController.updateVote);
 
 router.get('/:id', VotesController.getSingleVote);
 
-router.get('/count/byCandidate', VotesController.getCountByCandidate);
-router.get('/parliament/count/byCandidate', VotesController.getCountByCandidateForParliament);
 
 module.exports = router;

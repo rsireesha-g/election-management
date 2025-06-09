@@ -9,7 +9,7 @@ router.delete('/:id', VotersController.deleteVoter);
 
 // router.get('/:id', VotersController.getSingleVoter);
 
-router.get("/femaleVotersCountByCandidateId/:candidate_id", VotersController.getFemaleVotersCountByCandidateId);
+router.get("/femaleVotersCountByCandidateId/:candidate_id", VotersController.getFemaleVotersByCandidateId);
 router.get('/parliamentElection/genderBasedVoterCount', VotersController.getGenderBasedVoterCount);
 router.get("/parliamentElection/maleVoters", VotersController.getMaleVotersForParliamentElection);
 

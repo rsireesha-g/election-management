@@ -70,6 +70,13 @@ components:
         type: integer
        election_id:
         type: integer
+    vote-count:
+      type: object
+      properties:
+        candidate_name: 
+         type: string
+        count:
+         type: integer
 paths:
   /voters:
     get:
@@ -94,7 +101,7 @@ paths:
               $ref: '#/components/schemas/voter'
         responses:
           '201':
-            description: Voter created succesfully message
+            description: Voter created successfully message
           '400':
             description: Invalid input data
   /voters/{id}:
@@ -155,7 +162,7 @@ paths:
               $ref: '#/components/schemas/candidate'
         responses:
           '201':
-            description: CAndidate created succesfully message
+            description: CAndidate created successfully message
           '400':
             description: Invalid input data
   /candidates/{id}:
@@ -198,7 +205,7 @@ paths:
       summary: Get a list of all types of election
       responses:
         '200':
-          description: A JSON array of elction objects
+          description: A JSON array of election objects
           content:
             application/json:
               schema:
@@ -216,7 +223,7 @@ paths:
               $ref: '#/components/schemas/election'
         responses:
           '201':
-            description: Election created succesfully message
+            description: Election created successfully message
           '400':
             description: Invalid input data
   /elections/{id}:
@@ -277,7 +284,7 @@ paths:
               $ref: '#/components/schemas/vote'
         responses:
           '201':
-            description: Vote created succesfully message
+            description: Vote created successfully message
           '400':
             description: Invalid input data
   /votes/{id}:
@@ -315,3 +322,117 @@ paths:
           description: Vote deleted successfully
         '400':
           description: Invalid id
+  /voters/femaleVotersCountByCandidateId/{candidate_id}:
+   get:
+    summary: Q1 Get the count of female voters for a particular candidate
+    parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+    responses:
+     '200':
+       description: A JSON array of vote count and candidate ID objects
+       content:
+        application/json:
+         schema:
+          type: array
+          items:
+            type: object
+            properties:
+             voter_name:
+              type: string
+     '400':
+       description: Invalid ID
+     '404':
+       description: No voter found  
+  /voters/parliamentElection/genderBasedVoterCount:
+    get:
+      summary: Q2 Fetch count for male & female candidates standing for parliament election
+      responses: 
+        '200':
+           description:  A JSON array of vote count based on gender for parliament election
+           content:
+        application/json:
+         schema:
+          type: array
+          items:
+            type: object
+            properties:
+             gender: 
+              type: string
+             No Of Candidates:
+              type: integer
+      '404':
+        description: No voter found  
+  /candidates/election/{election_type}:
+    get:
+      summary: Q3 Fetch all the candidate names standing for parliament election
+      parameters:
+        - name: election_type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses: 
+        '200':
+           description:  A JSON array of candidate names standing for parliament election
+           content:
+        application/json:
+         schema:
+          type: array
+          items:
+            type: string
+            properties:
+             candidate_name: 
+              type: string
+      '404':
+        description: No voter found       
+  /candidates/count/byCandidate/byElection:
+    get:
+      summary: Q4 Get the count of votes for each candidates for each election
+      responses:
+        '200':
+          description: A JSON array of vote count and candidate name and election type objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                   election_type:
+                     type: string
+                   candidate_name:
+                     type: string
+                   count:
+                     type: integer
+          '400':
+             description: Invalid response
+          '404':
+             description: Voters Not Found                 
+  /candidates/count/byCandidate:
+    get:
+      summary: Q5 Get the count of votes for each candidates 
+      responses:
+        '200':
+          description: A JSON array of vote count and candidate name objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vote-count'
+  /candidates/parliament/count/byCandidate:
+    get:
+     summary: Q6 Get count of votes for each candidate participated in parliament
+     responses:
+       '200':
+         content:
+           application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/vote-count'
+
