@@ -77,6 +77,13 @@ components:
          type: string
         count:
          type: integer
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer     
 paths:
   /voters:
     get:
@@ -90,6 +97,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/voter'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
     post:
         summary: Create a voter 
         description: adds a voter data object into the voters table
@@ -151,6 +170,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/candidate'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
     post:
         summary: Create a candidate
         description: adds a candidate data object into the voters table
@@ -212,6 +243,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/election'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
     post:
         summary: Create a election type 
         description: adds a election data object into the elections table
@@ -273,6 +316,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/vote'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
     post:
         summary: Create a vote 
         description: adds a vote data object into the votes table
@@ -345,8 +400,18 @@ paths:
               type: string
      '400':
        description: Invalid ID
-     '404':
-       description: No voter found  
+       '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+       '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /voters/parliamentElection/genderBasedVoterCount:
     get:
       summary: Q2 Fetch count for male & female candidates standing for parliament election
@@ -364,8 +429,18 @@ paths:
               type: string
              No Of Candidates:
               type: integer
-      '404':
-        description: No voter found  
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /candidates/election/{election_type}:
     get:
       summary: Q3 Fetch all the candidate names standing for parliament election
@@ -387,8 +462,19 @@ paths:
             properties:
              candidate_name: 
               type: string
-      '404':
-        description: No voter found       
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+     
   /candidates/count/byCandidate/byElection:
     get:
       summary: Q4 Get the count of votes for each candidates for each election
@@ -408,10 +494,20 @@ paths:
                      type: string
                    count:
                      type: integer
-          '400':
-             description: Invalid response
-          '404':
-             description: Voters Not Found                 
+        '400':
+          description: Invalid response
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /candidates/count/byCandidate:
     get:
       summary: Q5 Get the count of votes for each candidates 
@@ -424,6 +520,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/vote-count'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+        '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /candidates/parliament/count/byCandidate:
     get:
      summary: Q6 Get count of votes for each candidate participated in parliament
@@ -435,6 +543,18 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/vote-count'
+       '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+       '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /candidates/parliament/agedCandidates:
     get:
      summary: Q7 Fetch all the candidates standing for parliament election whose age is greater than 50
@@ -446,6 +566,18 @@ paths:
               type: array
               items:
                 type: string
+       '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+       '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   /voters/parliamentElection/maleVoters/aged:
     get:
      summary: Q8 Fetch all the male voters voted in parliament election whose age is greater than 50
@@ -457,3 +589,15 @@ paths:
               type: array
               items:
                 type: string
+       '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+       '404':
+         description: Items Not Found
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
