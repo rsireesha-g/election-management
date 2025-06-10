@@ -54,6 +54,8 @@ const Candidates = {
                      GROUP BY candidate_name`;
         db.query(sql, callback);
     }
+
+
 }
 
 module.exports = Candidates;

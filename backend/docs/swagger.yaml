@@ -435,4 +435,25 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/vote-count'
-
+  /candidates/parliament/agedCandidates:
+    get:
+     summary: Q7 Fetch all the candidates standing for parliament election whose age is greater than 50
+     responses:
+       '200':
+         content:
+           application/json:
+            schema:
+              type: array
+              items:
+                type: string
+  /voters/parliamentElection/maleVoters/aged:
+    get:
+     summary: Q8 Fetch all the male voters voted in parliament election whose age is greater than 50
+     responses:
+       '200':
+         content:
+           application/json:
+            schema:
+              type: array
+              items:
+                type: string

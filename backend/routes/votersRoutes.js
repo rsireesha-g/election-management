@@ -11,6 +11,6 @@ router.delete('/:id', VotersController.deleteVoter);
 
 router.get("/femaleVotersCountByCandidateId/:candidate_id", VotersController.getFemaleVotersByCandidateId);
 router.get('/parliamentElection/genderBasedVoterCount', VotersController.getGenderBasedVoterCount);
-router.get("/parliamentElection/maleVoters", VotersController.getMaleVotersForParliamentElection);
+router.get("/parliamentElection/maleVoters/aged", VotersController.getMaleVotersForParliamentElection);
 
 module.exports = router;

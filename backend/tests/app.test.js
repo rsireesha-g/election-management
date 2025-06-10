@@ -220,7 +220,7 @@ afterAll(async () => {
 describe('Queries Votes API', () => {
     test('Q1 should show all the female voters for a particular candidate', async () => {
         const response = await request(app).get('/voters/femaleVotersCountByCandidateId/9');
-        console.log(response.body);
+        // console.log(response.body);
         expect(response.statusCode).toBe(200);
         // if (response.body?.length > 0) {
         //     expect(response.body[0]).toHaveProperty("voter_name")
@@ -229,7 +229,7 @@ describe('Queries Votes API', () => {
 
     test('Q2 should show the count of male and female candidates in parliament election', async () => {
         const response = await request(app).get('/voters/parliamentElection/genderBasedVoterCount');
-        console.log(response.body);
+        // console.log(response.body);
         expect(response.statusCode).toBe(200);
         if (response.body?.length > 0) {
             expect(response.body[0]).toHaveProperty("gender")
@@ -239,7 +239,7 @@ describe('Queries Votes API', () => {
 
     test('Q3 should show the list of candidate names in parliament election', async () => {
         const response = await request(app).get('/candidates/election/Parliament');
-        console.log(response.body);
+        // console.log(response.body);
         expect(response.statusCode).toBe(200);
         // if (response.body?.length > 0) {
         //     // expect(response.body[0]).toType
@@ -275,6 +275,24 @@ describe('Queries Votes API', () => {
             expect(response.body[0]).toHaveProperty("candidate_name");
             expect(response.body[0]).toHaveProperty("count")
         }
+    });
+
+    test('Q7 should show candidates standing for parliament election whose age > 50', async () => {
+        const response = await request(app).get('/candidates/parliament/agedCandidates');
+        // console.log(response.body);
+        expect(response.statusCode).toBe(200);
+        if (response.body?.length > 0) {
+            expect(typeof response.body[0]).toBe("string");
+        }
+    });
+
+    test('Q8 should show male voters voted in parliament election whose age > 50', async () => {
+        const response = await request(app).get('/voters/parliamentElection/maleVoters/aged');
+        console.log(response.body);
+        expect(response.statusCode).toBe(200);
+        // if (response.body?.length > 0) {
+        //     expect(typeof response.body[0]).toBe("string");
+        // }
     });
 
 })
