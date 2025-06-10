@@ -6,20 +6,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+*{
+  box-sizing: border-box;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.h1,h2,h3,h4,h5,h6,p,div{
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+
+}
+a:focus,a:active{
+  text-decoration: none;
+}
+
+.primaryButton{
+  min-width: 50px;
+  height: 34px;
+  padding:0px 24px;
+  border-radius: 8px;
+  border:1px solid gray;
+  background-color: var(--btn-bg-color);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 10%);
+  color:white;
+  font-size: var(--m);
+  cursor: pointer;
 }
 
 :root{
   --sm:12px;
   --m:14px;
   --l:16px;
-  --xl:20px;
+  --xl:18px;
   --xxl:24px;
   --xxxl:32px;
 
-  --primary-color:rgba(42, 93, 248, 0.745);
+  --primary-color:#273239;
   --secondary-color:#fff;
+  --btn-bg-color:#273239;
+  --error-msg-color:#d40c0c
 }

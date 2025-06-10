@@ -1,0 +1,54 @@
+.userTypeTabsFlex{
+    display:flex;
+    gap:1rem;
+    align-items: center;
+}
+.title{
+    font-size:var(--xl);
+    font-weight:semibold;
+    margin-bottom: 1rem;
+}
+.tabBtn{
+    font-size:var(--m);
+    border-radius:6px;
+    border:1px solid gray;
+    padding:6px 12px;
+    cursor: pointer;
+}
+.active{
+    background-color: rgb(54, 73, 240);
+}
+
+.loginForm{
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+    align-items: flex-start;
+    width:100%;
+    margin: 1rem 0rem;
+}
+.inputFlex{
+     display:flex;
+    flex-direction:column;
+    gap:0.4rem;
+    align-items: flex-start;
+    width:100%;
+}
+.label{
+    font-size: var(--l);
+    font-weight: 600;
+}
+.inputField{
+    width:100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: var(--m);
+}
+.error{
+    font-size: var(--sm);
+    color:var(--error-msg-color)
+}
+.btn{
+    width:100px;
+    margin:1rem auto 0rem auto;
+}

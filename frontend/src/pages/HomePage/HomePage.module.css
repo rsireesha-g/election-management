@@ -1,0 +1,8 @@
+.heroBanner{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.banner{
+    width: 100%;
+    object-fit: contain;
+}
