@@ -10,8 +10,8 @@ export const Header = () => {
                 </Link>
                 <h2 className={styles.title}>Election Management System</h2>
                 <div className={styles.btnsFlex}>
-                    <button className={`primaryButton ${styles.btn}`}>Login</button>
-                    <button className={`primaryButton ${styles.btn}`}>Signup</button>
+                    <button className={`primaryButton ${styles.btn}`}><Link to="/login">Login</Link></button>
+                    <button className={`primaryButton ${styles.btn}`}><Link to='/signup'>Signup</Link></button>
                 </div>
             </div>
         </header>

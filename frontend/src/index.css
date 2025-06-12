@@ -21,7 +21,7 @@ code {
 
 a{
   text-decoration: none;
-
+  color:unset;
 }
 a:focus,a:active{
   text-decoration: none;

@@ -11,6 +11,7 @@ const votersRoute = require("./routes/votersRoutes");
 const candidatesRoute = require("./routes/candidatesRoutes");
 const votesRoute = require("./routes/votesRoutes");
 const electionsRoute = require("./routes/electionsRoutes");
+const userAuthRoute = require("./routes/userAuthRoutes");
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ app.use('/voters', votersRoute);
 app.use('/candidates', candidatesRoute);
 app.use('/votes', votesRoute);
 app.use('/elections', electionsRoute);
+app.use('/auth', userAuthRoute);
 
 const file = fs.readFileSync("./docs/swagger.yaml", "utf-8");
 const swaggerDoc = YAML.parse(file);
