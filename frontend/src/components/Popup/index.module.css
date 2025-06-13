@@ -1,0 +1,30 @@
+.popupContainer{
+   width: 200px;
+    padding: 0.5rem;
+    background-color: #fff;
+    font-size: var(--m);
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 11;
+    border-radius: 4px;
+    color: var(--primary-color);
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 10%);
+    border:1px solid #555;
+}
+
+.error{
+    color:var(--error-msg-color);
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
