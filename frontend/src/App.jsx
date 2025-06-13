@@ -5,6 +5,8 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Dashboard as VoterDashboard } from './pages/Voter/Dashboard';
 import { Dashboard as CommitteeDashboard } from './pages/Committee/Dashboard';
+import { VoterPrivateRoute } from './components/PrivateRoute/voter';
+import { CommitteePrivateRoute } from './components/PrivateRoute/committee';
 
 function App() {
 
@@ -13,8 +15,16 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/voter/dashboard" element={<VoterDashboard />} />
-      <Route path="/committee/dashboard" element={<CommitteeDashboard />} />
+      <Route path="/voter/dashboard" element={
+        <VoterPrivateRoute>
+          <VoterDashboard />
+        </VoterPrivateRoute>
+      } />
+      <Route path="/committee/dashboard" element={
+        <CommitteePrivateRoute>
+          <CommitteeDashboard />
+        </CommitteePrivateRoute>
+      } />
     </Routes>
   );
 }
