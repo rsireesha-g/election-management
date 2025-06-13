@@ -601,3 +601,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error' 
+  /auth/signup:
+    post:
+      summary: User registration
+      requestBody:
+        required: true
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              user_name: 
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              user_type:
+                type: string
+      responses:
+        '201':
+          description: User Registered successfully!
+        '400':
+          description: Invalid Data             
+  /auth/login:
+    post:
+      summary: User Login
+      requestBody:
+        required: true
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              user_type:
+                type: string
+      responses:
+        '200':
+          description: User Login success!
+        '400':
+          description: Invalid Data  
+        '500':
+          description: Server Error
+        '401':
+          description: Invalid email or password               
+        
+        
+

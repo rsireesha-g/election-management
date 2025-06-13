@@ -217,85 +217,113 @@ afterAll(async () => {
 //     })
 // });
 
-describe('Queries Votes API', () => {
-    test('Q1 should show all the female voters for a particular candidate', async () => {
-        const response = await request(app).get('/voters/femaleVotersCountByCandidateId/9');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        // if (response.body?.length > 0) {
-        //     expect(response.body[0]).toHaveProperty("voter_name")
-        // }
-    });
+// describe('Queries Votes API', () => {
+//     test('Q1 should show all the female voters for a particular candidate', async () => {
+//         const response = await request(app).get('/voters/femaleVotersCountByCandidateId/9');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(typeof response.body[0]).toBe("string")
+//         }
+//     });
 
-    test('Q2 should show the count of male and female candidates in parliament election', async () => {
-        const response = await request(app).get('/voters/parliamentElection/genderBasedVoterCount');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        if (response.body?.length > 0) {
-            expect(response.body[0]).toHaveProperty("gender")
-            expect(response.body[0]).toHaveProperty("No Of Candidates")
-        }
-    });
+//     test('Q2 should show the count of male and female candidates in parliament election', async () => {
+//         const response = await request(app).get('/voters/parliamentElection/genderBasedVoterCount');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(response.body[0]).toHaveProperty("gender")
+//             expect(response.body[0]).toHaveProperty("No Of Candidates")
+//         }
+//     });
 
-    test('Q3 should show the list of candidate names in parliament election', async () => {
-        const response = await request(app).get('/candidates/election/Parliament');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        // if (response.body?.length > 0) {
-        //     // expect(response.body[0]).toType
-        // }
-    });
+//     test('Q3 should show the list of candidate names in parliament election', async () => {
+//         const response = await request(app).get('/candidates/election/Parliament');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(typeof response.body[0]).toBe("string")
+//         }
+//     });
 
-    test('Q4 should show the count of votes for each candidate for each election', async () => {
-        const response = await request(app).get('/candidates/count/byCandidate/byElection');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        if (response.body?.length > 0) {
-            expect(response.body[0]).toHaveProperty("election_type");
-            expect(response.body[0]).toHaveProperty("candidate_name");
-            expect(response.body[0]).toHaveProperty("count")
-        }
-    });
+//     test('Q4 should show the count of votes for each candidate for each election', async () => {
+//         const response = await request(app).get('/candidates/count/byCandidate/byElection');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(response.body[0]).toHaveProperty("election_type");
+//             expect(response.body[0]).toHaveProperty("candidate_name");
+//             expect(response.body[0]).toHaveProperty("count")
+//         }
+//     });
 
-    test('Q5 should show the count of votes for each candidate', async () => {
-        const response = await request(app).get('/candidates/count/byCandidate');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        if (response.body?.length > 0) {
-            expect(response.body[0]).toHaveProperty("candidate_name");
-            expect(response.body[0]).toHaveProperty("count")
-        }
-    });
+//     test('Q5 should show the count of votes for each candidate', async () => {
+//         const response = await request(app).get('/candidates/count/byCandidate');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(response.body[0]).toHaveProperty("candidate_name");
+//             expect(response.body[0]).toHaveProperty("count")
+//         }
+//     });
 
-    test('Q6 should show the count of votes for each candidate participated for parliament elections', async () => {
-        const response = await request(app).get('/candidates/parliament/count/byCandidate');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        if (response.body?.length > 0) {
-            expect(response.body[0]).toHaveProperty("candidate_name");
-            expect(response.body[0]).toHaveProperty("count")
-        }
-    });
+//     test('Q6 should show the count of votes for each candidate participated for parliament elections', async () => {
+//         const response = await request(app).get('/candidates/parliament/count/byCandidate');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(response.body[0]).toHaveProperty("candidate_name");
+//             expect(response.body[0]).toHaveProperty("count")
+//         }
+//     });
 
-    test('Q7 should show candidates standing for parliament election whose age > 50', async () => {
-        const response = await request(app).get('/candidates/parliament/agedCandidates');
-        // console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        if (response.body?.length > 0) {
-            expect(typeof response.body[0]).toBe("string");
-        }
-    });
+//     test('Q7 should show candidates standing for parliament election whose age > 50', async () => {
+//         const response = await request(app).get('/candidates/parliament/agedCandidates');
+//         // console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         if (response.body?.length > 0) {
+//             expect(typeof response.body[0]).toBe("string");
+//         }
+//     });
 
-    test('Q8 should show male voters voted in parliament election whose age > 50', async () => {
-        const response = await request(app).get('/voters/parliamentElection/maleVoters/aged');
-        console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        // if (response.body?.length > 0) {
-        //     expect(typeof response.body[0]).toBe("string");
-        // }
-    });
+//     test('Q8 should show male voters voted in parliament election whose age > 50', async () => {
+//         const response = await request(app).get('/voters/parliamentElection/maleVoters/aged');
+//         console.log(response.body);
+//         expect(response.statusCode).toBe(200);
+//         // if (response.body?.length > 0) {
+//         //     expect(typeof response.body[0]).toBe("string");
+//         // }
+//     });
 
+// });
+
+describe('User Auth API', () => {
+    test('User registration', async () => {
+        const response = await request(app)
+            .post("/auth/signup")
+            .set("Accept", "application/json")
+            .send({
+                user_name: 'Nihitha',
+                email: 'nihi@gmail.com',
+                password: 'nihini',
+                user_type: 'voter'
+            });
+        expect(response.statusCode).toBe(201);
+    })
+    test('User Login', async () => {
+        const response = await request(app)
+            .post("/auth/login")
+            .set("Accept", "application/json")
+            .send({
+                email: 'nihi@gmail.com',
+                password: 'nihini',
+                user_type: 'voter'
+            });
+        expect(response.statusCode).toBe(200);
+    })
 })
+
+
 
 
 

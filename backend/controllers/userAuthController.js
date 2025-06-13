@@ -16,14 +16,11 @@ exports.userSignup = async (req, res) => {
 
 exports.userLogin = async (req, res) => {
     const { user_type, email, password } = req.body;
-    console.log(req.body)
-    Users.userLogin(email, user_type, (err, user) => {
-        console.log('pscheck', password, user?.password, user);
 
+    Users.userLogin(email, user_type, (err, user) => {
         if (err) return res.status(500).json({ message: 'Server error' });
         if (!user) return res.status(401).json({ message: 'Invalid email or password' });
         bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) return res.status(500).json({ message: 'Server error' });
             if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
             const token = jwt.sign(
                 { id: user.id, email: user.email, user_type: user.user_type },
