@@ -1,8 +1,14 @@
 .heroBanner{
     width: 100%;
-    margin-bottom: 1rem;
+ height:700px;
+   background-image: url("../../assests/hero-img.jpg");
+   background-position: center;
+   background-size:contain;
+   background-repeat: no-repeat;
 }
 .banner{
     width: 100%;
+    max-height: 100%;
     object-fit: contain;
+    object-position: center;
 }

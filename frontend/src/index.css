@@ -51,5 +51,8 @@ a:focus,a:active{
   --primary-color:#273239;
   --secondary-color:#fff;
   --btn-bg-color:#273239;
-  --error-msg-color:#d40c0c
+  --error-msg-color:#ff4343;
+  --blue-color:#0e4a9c;
+  --purple-color:#6f42c1;
+    --pink-color: #d63384;
 }

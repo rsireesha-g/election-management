@@ -1,7 +1,9 @@
 .main-component{
   width:100vw;
-  max-width: min(1400px,100%);
+  /* max-width: min(1400px,100%); */
   margin: auto;
+      min-height: 50vh;
+
 }
 
 
