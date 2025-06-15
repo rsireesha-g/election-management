@@ -2,6 +2,6 @@ import React from 'react'
 
 export const Dashboard = () => {
     return (
-        <div>Welcome to Committee Dashboard</div>
+        <div className='title'>Welcome to Committee Dashboard</div>
     )
 }

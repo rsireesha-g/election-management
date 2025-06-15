@@ -53,7 +53,7 @@ export const Signup = () => {
                     >Voter</button>
                     <button onClick={() => handleUserType('committee')}
                         className={`${styles.tabBtn} ${values.user_type === 'committee' ? styles.active : styles.default}`}
-                    >Committee</button>
+                    >Committee Member</button>
                 </div>
                 <div className={styles.loginForm} >
                     <div className={styles.inputFlex}>

@@ -40,6 +40,12 @@ a:focus,a:active{
   cursor: pointer;
 }
 
+.title{
+  font-size: var(--xl);
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+}
 :root{
   --sm:12px;
   --m:14px;
