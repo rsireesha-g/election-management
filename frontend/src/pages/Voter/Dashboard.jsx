@@ -1,7 +1,7 @@
-import React from 'react'
+import { Layout } from '../../components/Layout'
 
 export const Dashboard = () => {
     return (
-        <div className='title'>Welcome to Voter Dashboard</div>
+        <Layout title='Voter Dashboard' />
     )
 }
