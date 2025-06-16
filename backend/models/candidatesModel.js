@@ -4,10 +4,10 @@ const Candidates = {
     getAll: (callback) => {
         db.query('SELECT * FROM candidates', callback);
     },
-    createCandidate: (candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, callback) => {
-        db.query(`INSERT INTO candidates (candidate_name, aadhar_id, DOB, gender, email, contact_no, address,election_type) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type], callback)
+    createCandidate: (candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location, callback) => {
+        db.query(`INSERT INTO candidates (candidate_name, aadhar_id, DOB, gender, email, contact_no, address,election_type,party, nomination_location) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
+            [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location], callback)
     },
     deleteCandidate: (id, callback) => {
         db.query(`DELETE FROM Votes WHERE candidate_id=${id}`, (err) => {
@@ -17,16 +17,17 @@ const Candidates = {
         })
     },
     updateCandidate: (id, data, callback) => {
-        const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type } = data;
-        const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=? WHERE id = ?`;
-        db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, id], callback);
+        const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location } = data;
+        console.log(data, 'data model')
+        const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=?, party=?, nomination_location=? WHERE id = ?`;
+        db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location, id], callback);
     },
     getCandidateById: (id, callback) => {
         db.query(`SELECT * FROM candidates WHERE ID=${id}`, callback)
     },
 
     getCandidateNameByElectionType: (election_type, callback) => {
-        db.query(`SELECT candidate_name FROM candidates WHERE election_type=?`, [election_type], callback);
+        db.query(`SELECT * FROM candidates WHERE election_type=?`, [election_type], callback);
     },
     getCandidatesCountByElectionType: (callback) => {
         db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.ID) AS 'count'  FROM Candidates 

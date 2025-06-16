@@ -12,45 +12,54 @@ export const ListingGrid = ({
     activeType,
     handleTypeSelect,
     headings,
-    data
+    data,
+    isLoading,
+    setEdit,
+    handleDelete,
+    setIsAdd
 }) => {
 
     return (
-        <div className={styles.listingComponent}>
-            <TabComponent
-                tabs={tabs}
-                handleTabSelect={handleTabSelect}
-                activeTab={activeTab}
-            />
-            <ElectionTabComponent
-                types={electionTypes}
-                handleTypeSelect={activeTab ? handleTypeSelect : () => { }}
-                activeType={activeType}
-            />
-            <div className={styles.gridOuterComponent}>
-                <button className={`primaryButton ${styles.addBtn}`}>Add Candidate</button>
-                <div className={styles.gridComponent}>
-                    {headings?.map((title, ind) => (
-                        <div key={ind} className={styles.tab}>{title}</div>
-                    ))}
-                </div>
-                <div className={styles.gridInnerComponent}>
-                    {data?.map((detail, ind) => (
-                        <div className={styles.gridComponent} key={ind}>
-                            <div className={styles.details}>{ind} </div>
-                            <div className={styles.details}>{detail?.candidate_name} </div>
-                            <div className={styles.details}>{detail?.nomination_location} </div>
-                            <div className={styles.details}>{detail?.party} </div>
-                            <div className={`${styles.details} ${styles.actions}`}>
-                                <div className={styles.action}>Edit</div>
-                                <span>/</span>
-                                <div className={styles.action}>Delete</div>
-                            </div>
+        <>
+            <div className={styles.listingComponent}>
+                <TabComponent
+                    tabs={tabs}
+                    handleTabSelect={handleTabSelect}
+                    activeTab={activeTab}
+                />
+                <ElectionTabComponent
+                    types={electionTypes}
+                    handleTypeSelect={activeTab ? handleTypeSelect : () => { }}
+                    activeType={activeType}
+                />
+                {isLoading ? <div>Loading...</div>
+                    :
+                    <div className={styles.gridOuterComponent}>
+                        <button className={`primaryButton ${styles.addBtn}`} onClick={setIsAdd}>Add Candidate</button>
+                        <div className={styles.gridComponent}>
+                            {headings?.map((title, ind) => (
+                                <div key={ind} className={styles.tab}>{title}</div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                        <div className={styles.gridInnerComponent}>
+                            {data?.map((detail, ind) => (
+                                <div className={styles.gridComponent} key={ind}>
+                                    <div className={styles.details}>{ind + 1} </div>
+                                    <div className={styles.details}>{detail?.candidate_name} </div>
+                                    <div className={styles.details}>{detail?.nomination_location} </div>
+                                    <div className={styles.details}>{detail?.party} </div>
+                                    <div className={`${styles.details} ${styles.actions}`}>
+                                        <div className={styles.action} onClick={() => setEdit(detail?.ID)}>Edit</div>
+                                        <span>/</span>
+                                        <div className={styles.action} onClick={() => handleDelete(detail?.ID)}>Delete</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+        </>
     )
 }
 

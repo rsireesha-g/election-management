@@ -25,7 +25,7 @@
 .gridComponent{
   width: 100%;
   display: grid;
-  grid-template-columns: 5% 35% 20% 20% 20%;
+  grid-template-columns: 8% 32% 20% 20% 20%;
   border:1px solid #000;
 }
 .tab{

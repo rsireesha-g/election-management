@@ -9,7 +9,7 @@ exports.getAllCandidates = (req, res) => {
 
 exports.createCandidate = (req, res) => {
     const data = req.body;
-    const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type } = data;
+    const { candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location } = data;
 
     for (key in data) {
         if (!data[key]) {
@@ -17,7 +17,7 @@ exports.createCandidate = (req, res) => {
         }
     }
 
-    Candidates.createCandidate(candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, (err, result) => {
+    Candidates.createCandidate(candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json({
             message: 'Candidate created successfully',
@@ -40,6 +40,7 @@ exports.deleteCandidate = (req, res) => {
 exports.updateCandidate = (req, res) => {
     const data = req.body;
     const { id } = req.params;
+    console.log(req.body, 'data controller');
 
     for (key in data) {
         if (!data[key]) {
@@ -47,6 +48,8 @@ exports.updateCandidate = (req, res) => {
         }
     }
     Candidates.updateCandidate(id, data, (err, result) => {
+        console.log(result, res)
+
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json({
             message: 'Candidate data updated successfully',
@@ -70,7 +73,7 @@ exports.getCandidateNameByElectionType = (req, res) => {
 
     Candidates.getCandidateNameByElectionType(election_type, (err, result) => {
         if (err) res.status(500).send(err);
-        res.status(200).send(result.map((i) => i.candidate_name))
+        res.status(200).send(result)
         // res.status(200).send(result)
     })
 };
