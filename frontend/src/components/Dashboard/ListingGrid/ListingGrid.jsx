@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styles from "./ListingGrid.module.css"
 import { DeleteCandidate } from "../../../pages/CommitteeDashboard/DeleteCandidate";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 export const ListingGrid = ({
     headings,
@@ -19,7 +20,7 @@ export const ListingGrid = ({
             <div className={styles.listingComponent}>
                 <div className={styles.top}>
                     <div className={styles.heading}>List of {electionType} Candidates</div>
-                    <button className={`primaryButton ${styles.addBtn}`} onClick={setIsAdd}>Add Candidate</button>
+                    <button className={`primaryButton ${styles.addBtn}`} onClick={setIsAdd} title='Add Candidate'>Add Candidate</button>
                 </div>
                 <div className={styles.gridOuterComponent}>
                     <div className={styles.gridComponent}>
@@ -33,20 +34,22 @@ export const ListingGrid = ({
                             {data?.map((detail, ind) => (
                                 <div className={styles.gridComponent} key={ind}>
                                     <div className={styles.details}>{ind + 1} </div>
-                                    <div className={styles.details}>{detail?.candidate_name} </div>
+                                    <div className={styles.details} title={detail?.candidate_name}>{detail?.candidate_name} </div>
                                     <div className={styles.details}>{detail?.nomination_location} </div>
                                     <div className={styles.details}>{detail?.party} </div>
                                     <div className={`${styles.details} ${styles.actions}`}>
                                         <div className={styles.action}
                                             onClick={() => setEdit(detail?.ID)}
-                                        >Edit</div>
-                                        <span>/</span>
+                                            title={'Edit'}
+                                        ><MdEdit /></div>
+                                        <span>|</span>
                                         <div className={styles.action}
                                             onClick={() => {
                                                 setID(detail?.ID);
                                                 setIsDeleteModelOpen(true)
                                             }}
-                                        >Delete</div>
+                                            title="Delete"
+                                        ><MdDelete /></div>
                                     </div>
                                 </div>
                             ))}

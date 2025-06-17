@@ -9,6 +9,9 @@
 .heading{
     font-size: var(--xl);
     font-weight:600;
+    width: 80%;
+    text-align:center;
+    margin:auto;
 }
 .buttonFlex{
     width:100%;
@@ -18,12 +21,21 @@
     margin-top: 1.5rem;
 }
 .cancelBtn{
-    /* background-color: var(--secondary-color);
-    color:var(--error-msg-color); */
+    background-color: var(--secondary-color);
+    color:var(--error-msg-color);
+    border:1px solid var(--bg-orange);
     font-weight: 600;
+    font-size: var(--l);
 }
 .deleteBtn{
     background-color: var(--secondary-color);
     color:var(--error-msg-color);
+    border:1px solid var(--bg-orange);
     font-weight: 600;
+    font-size: var(--l);
+}
+.buttonFlex .deleteBtn:hover,
+.buttonFlex .cancelBtn:hover{
+    background-color: var(--bg-orange);
+    color:var(--secondary-color);
 }

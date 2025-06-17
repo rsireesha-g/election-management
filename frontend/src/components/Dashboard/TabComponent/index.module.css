@@ -6,6 +6,7 @@
   gap:0.5rem;
   justify-content: flex-start;
   align-items: center;
+  margin: 1rem 0rem;
 }
 .tab{
   font-size: var(--l);
@@ -22,11 +23,11 @@
 }
 
 .typesComponent{
-  padding: 0.5rem;
   width: 100%;
   display:flex;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 .type{
   font-size: var(--l);
@@ -36,6 +37,11 @@
   padding: 0.5rem 0.8rem;
   background-color: #999;
   cursor: pointer;
+  max-width:150px;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+  text-wrap-mode: nowrap;
 }
 .typesComponent .type:nth-child(even){
   border-width:2px 0px;

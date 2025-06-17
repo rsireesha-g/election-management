@@ -77,4 +77,6 @@ a:focus,a:active{
   --default-bg-blue:#369adebb;
   --grid-bg-color:#5e6060cc;
   --grid-odd-row-bg:#ebe9e9;
+  --bg-orange:#fd9023d0;
+  --bg-btns-color2:rgba(5, 68, 169, 0.871);
 }

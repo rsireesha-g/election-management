@@ -7,9 +7,10 @@ export const EditCandidate = ({ onClose, candidate, handleChange, handleUpdate }
         <Modal >
             <div className={styles.innerModal}>
                 <div className={styles.editForm}>
-                    <h2 className={styles.title}>Edit Candidate Details</h2>
-                    <button onClick={onClose} className={styles.closeBtn}>✕</button>
-
+                    <div className={styles.top}>
+                        <h2 className={styles.title}>Edit Candidate Details</h2>
+                        <button onClick={onClose} className={styles.closeBtn}>✕</button>
+                    </div>
                     <div className={styles.details}>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Candidate Name</div>
@@ -54,7 +55,9 @@ export const EditCandidate = ({ onClose, candidate, handleChange, handleUpdate }
                         <div>
                         </div>
                     </div>
-                    <button className={'primaryButton'} onClick={handleUpdate}>Update</button>
+                    <div className={styles.button}>
+                        <button className={`primaryButton ${styles.submitBtn}`} onClick={handleUpdate}>Update</button>
+                    </div>
                 </div>
             </div>
         </Modal>

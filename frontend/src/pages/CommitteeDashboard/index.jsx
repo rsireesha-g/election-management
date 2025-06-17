@@ -71,8 +71,12 @@ export const Dashboard = () => {
             console.log(err)
         }
     }
+    const handleValidations = () => {
+        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
 
+    }
     const handleAdd = async () => {
+        const isValidated = handleValidations();
         try {
             console.log(candidateDetails);
             const data = candidateDetails;
@@ -91,7 +95,8 @@ export const Dashboard = () => {
             let y = x?.toISOString()?.split("T")?.[0];
             setCandidateDetails({ ...candidate?.[0], "DOB": y });
         }
-    }, [candidate, id])
+    }, [candidate, id]);
+
 
     return (
         <Layout title='Dashboard' >

@@ -12,7 +12,7 @@ export const Header = ({ title }) => {
         <header className={styles.header}>
             <div className={styles.flex}>
                 <div className={styles.logo}>
-                    {title}
+                    Election Dashboard
                 </div>
                 <div className={styles.btnsFlex}>
                     <button className={`primaryButton ${styles.btn}`} onClick={handleLogout}>Logout</button>

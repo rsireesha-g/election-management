@@ -13,7 +13,14 @@ export const TabComponent = ({ tabs, handleTabSelect, activeTab, tabType }) => {
                 :
                 <div className={styles.typesComponent}>
                     {tabs?.map((type, ind) => (
-                        <div className={`${styles.type} ${activeTab === type?.election_type ? styles.activeType : ''}`} key={ind} onClick={() => handleTabSelect(type?.election_type)}>{type?.election_type}</div>
+                        <div
+                            className={`${styles.type} ${activeTab === type?.election_type ? styles.activeType : ''}`}
+                            key={ind}
+                            title={type?.election_type}
+                            onClick={() => handleTabSelect(type?.election_type)}
+                        >
+                            {type?.election_type}
+                        </div>
                     ))}
                 </div>
             }</>
