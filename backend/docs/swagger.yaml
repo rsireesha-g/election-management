@@ -87,42 +87,30 @@ components:
 paths:
   /voters:
     get:
-      summary: Get a list of all the voters participating in election
+      summary: Get all voters or a specific voter by email
+      description: Returns a list of all voters or a single voter if email is specified.
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+            format: email
+          required: false
       responses:
-        '200':
-          description: A JSON array of voter objects
-          content:
-            application/json:
-              schema:
+       '200':
+        description: Voter(s) data retrieved
+        content:
+          application/json:
+            schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/voter'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error' 
-        '404':
-         description: Items Not Found
-         content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error' 
-    post:
-        summary: Create a voter 
-        description: adds a voter data object into the voters table
-        requestBody:
-          required: true
-          content:
-           application/json:
-            schema:
-              $ref: '#/components/schemas/voter'
-        responses:
-          '201':
-            description: Voter created successfully message
-          '400':
-            description: Invalid input data
+       '400':
+        description: Invalid email
+       '404':
+        description: Voter not found
+       '500':
+        description: Internal server error
   /voters/{id}:
     put:
       summary: Update a voter details
@@ -649,6 +637,32 @@ paths:
           description: Server Error
         '401':
           description: Invalid email or password               
-        
+  '/auth/users':
+    get:
+      summary: Get all voters or a specific voter by email
+      description: Returns a list of all voters or a single voter if email is specified.
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+            format: email
+          required: false
+      responses:
+       '200':
+        description: Voter(s) data retrieved
+        content:
+          application/json:
+            schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/voter'
+       '400':
+        description: Invalid email
+       '404':
+        description: Voter not found
+       '500':
+        description: Internal server error
+         
         
 

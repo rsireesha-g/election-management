@@ -1,21 +1,67 @@
-import { Modal } from "../../../components/Common/Modal";
-import styles from "./index.module.css";
+import { useSearchParams } from 'react-router-dom'
+import { Layout } from '../../../../components/Dashboard/Layout'
+import { useGetUsersDataQuery } from '../../../../redux/queries/users'
+import styles from "./index.module.css"
+import { useEffect, useState } from 'react'
+import { useCreateVoterMutation, useGetVoterDetailQuery } from '../../../../redux/queries/voters'
 
-export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionType }) => {
+const initialData = {
+    voter_name: '',
+    aadhar_id: '',
+    contact_no: '',
+    gender: '',
+    address: '',
+    email: '',
+    DOB: ''
+}
+
+export const Register = () => {
+    const email = localStorage.getItem("email");
+    const user_type = localStorage.getItem("user_type");
+    const emailEncoded = encodeURIComponent(email);
+
+
+    const { data, isLoading, error } = useGetUsersDataQuery({ email: emailEncoded, user_type }, { skip: !emailEncoded || !user_type })
+    const [voterDetails, setVoterDetails] = useState(initialData);
+    const [createVoter] = useCreateVoterMutation();
+    const [isSuccessfullyRegistered, setIsSuccessfullyRegistered] = useState(false);
+    const { data: voterData } = useGetVoterDetailQuery(email, { skip: !isSuccessfullyRegistered })
+    console.log(isSuccessfullyRegistered, 'register', voterData)
+    const handleChange = (e) => {
+        var { name, value } = e.target;
+        setVoterDetails({ ...voterDetails, [name]: value })
+    }
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            let res = await createVoter({ ...voterDetails, is_registered: true });
+            res?.data && setIsSuccessfullyRegistered(true);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if (data) {
+            setVoterDetails({ ...voterDetails, "voter_name": data?.user_name, "email": decodeURIComponent(data?.email) });
+        }
+    }, [data]);
+
     return (
-        <Modal >
-            <div className={styles.innerModal}>
-                <div className={styles.editForm}>
-                    <div className={styles.top}>
-                        <h2 className={styles.title}>Add Candidate Details</h2>
-                        <button onClick={onClose} className={styles.closeBtn}>✕</button>
-                    </div>
+        <Layout type='voter'>
+            <h2 className={styles.title}>Welcome {voterDetails?.voter_name || 'Voter'}!</h2>
+            <h4 >Please, register your details.</h4>
+            {voterData ?
+                <div className={styles.message}>Already Registered!</div>
+                : <form className={styles.form} onSubmit={(e) => handleRegister(e)}>
                     <div className={styles.details}>
                         <div className={styles.card}>
-                            <div className={styles.detailsLabel}>Candidate Name</div>
+                            <div className={styles.detailsLabel}>Voter Name</div>
                             <input className={styles.inputField}
-                                name="candidate_name"
+                                name="voter_name"
                                 placeholder='Eg: Nehru'
+                                defaultValue={voterDetails?.voter_name}
                                 onInput={(e) => {
                                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
                                 }}
@@ -35,6 +81,7 @@ export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionT
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Contact Number</div>
                             <input className={styles.inputField}
+
                                 onInput={(e) => {
                                     e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
                                 }}
@@ -43,6 +90,7 @@ export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionT
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Email</div>
                             <input className={styles.inputField}
+                                defaultValue={voterDetails?.email}
                                 onInput={(e) => {
                                     e.target.value = e.target.value.replace(/[^\w.@+-]/g, '').toLowerCase();
                                 }}
@@ -61,37 +109,16 @@ export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionT
                                 placeholder="Gender" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
-                            <div className={styles.detailsLabel}>Election Type</div>
-                            <input className={styles.inputField} name="election_type" placeholder="Election Type" defaultValue={activeElectionType} onChange={(e) => handleChange(e)} />
-                        </div>
-                        <div className={styles.card}>
                             <div className={styles.detailsLabel}>Full Address</div>
                             <input className={styles.inputField} name="address" placeholder="Enter Full address" onChange={(e) => handleChange(e)} />
-                        </div>
-                        <div className={styles.card}>
-                            <div className={styles.detailsLabel}>Party Name</div>
-                            <input className={styles.inputField} name="party"
-                                onInput={(e) => {
-                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                                }}
-                                placeholder="Party Name" onChange={(e) => handleChange(e)} />
-                        </div>
-                        <div className={styles.card}>
-                            <div className={styles.detailsLabel}>Nomination Location</div>
-                            <input className={styles.inputField}
-                                onInput={(e) => {
-                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                                }}
-                                name="nomination_location" placeholder="Nomination location" onChange={(e) => handleChange(e)} />
                         </div>
                         <div>
                         </div>
 
                     </div>
-                    <div className={styles.button}>
-                        <button className={`primaryButton ${styles.submitBtn}`} onClick={handleAdd}>Update</button>
-                    </div>
-                </div>
-            </div>
-        </Modal>)
+                    <input type="submit" value='Register' className={`${styles.submitBtn} primaryButton`} />
+                </form>
+            }
+        </Layout>
+    )
 }

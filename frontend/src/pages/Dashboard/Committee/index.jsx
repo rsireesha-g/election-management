@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Layout } from '../../components/Dashboard/Layout'
-import { ListingGrid } from '../../components/Dashboard/ListingGrid/ListingGrid'
+import { Layout } from '../../../components/Dashboard/Layout'
+import { ListingGrid } from '../../../components/Dashboard/ListingGrid/ListingGrid'
 import styles from "./index.module.css";
 import {
     useAddCandidateDataMutation,
@@ -9,10 +9,10 @@ import {
     useGetCandidateDetailsByIdQuery,
     useGetCandidatesDataQuery,
     useUpdateCandidateDataMutation
-} from '../../redux/queries/candidates';
-import { useGetElectionsDataQuery } from '../../redux/queries/elections';
-import { Modal } from '../../components/Common/Modal';
-import { TabComponent } from '../../components/Dashboard/TabComponent';
+} from '../../../redux/queries/candidates';
+import { useGetElectionsDataQuery } from '../../../redux/queries/elections';
+import { Modal } from '../../../components/Common/Modal';
+import { TabComponent } from '../../../components/Dashboard/TabComponent';
 import { AddCandidate } from './AddCandidate';
 import { EditCandidate } from './EditCandidate';
 
@@ -99,7 +99,7 @@ export const Dashboard = () => {
 
 
     return (
-        <Layout title='Dashboard' >
+        <Layout type='committee' >
             <h2 className={styles.title}>Committee Dashboard</h2>
             <TabComponent
                 tabType={'mainTabs'}
@@ -120,9 +120,11 @@ export const Dashboard = () => {
                 headings={['S.No', 'Name', 'Place', 'Party', 'Actions']}
                 data={data || []}
                 isLoading={isLoading}
+                id={id}
+                setID={setId}
                 setEdit={(id) => {
                     setId(id)
-                    setIsEdit((prev) => !prev)
+                    setIsEdit(true)
                 }}
                 handleDelete={handleDeleteCandidate}
                 setIsAdd={() => setIsAdd((prev) => !prev)}
@@ -156,37 +158,3 @@ export const Dashboard = () => {
     )
 }
 
-
-
-/*
-ID
-: 
-4
-aadhar_id
-: 
-"4567-8912-3456"
-address
-: 
-"19 Rajaji Nagar, Bengaluru, KA"
-candidate_name
-: 
-"Neha Raut"
-contact_no
-: 
-"9001234567"
-election_type
-: 
-"State Assembly"
-email
-: 
-"neha.raut@partyD.com"
-gender
-: 
-"Female"
-nomination_location
-: 
-"Yelanka"
-party
-: 
-"Congress"
-*/

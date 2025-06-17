@@ -47,9 +47,10 @@ export const Login = ({ onClose, handleExistingAcc }) => {
                 if (response.status === 200) {
                     localStorage.setItem('token', response?.data?.token);
                     localStorage.setItem('user_type', response?.data?.user?.user_type);
-                    setMessage({ type: 'success', msg: 'User Login Successful!' })
-                    if (response?.data?.user?.user_type === 'voter') navigate("/voter/dashboard")
-                    if (response?.data?.user?.user_type === 'committee') navigate("/committee/dashboard")
+                    localStorage.setItem('email', response?.data?.user?.email);
+                    setMessage({ type: 'success', msg: 'User Login Successful!' });
+                    if (response?.data?.user?.user_type === 'voter') navigate(`/dashboard/voter}`)
+                    if (response?.data?.user?.user_type === 'committee') navigate("/dashboard/committee")
                 }
             } catch (err) {
                 setMessage({ type: 'error', msg: err?.response?.data?.message || err?.message })

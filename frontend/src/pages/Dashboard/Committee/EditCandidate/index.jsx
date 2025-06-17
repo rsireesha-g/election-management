@@ -1,4 +1,4 @@
-import { Modal } from "../../../components/Common/Modal";
+import { Modal } from "../../../../components/Common/Modal";
 import styles from "./index.module.css";
 
 

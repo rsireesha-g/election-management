@@ -1,9 +1,11 @@
 import { useState } from "react"
 import styles from "./ListingGrid.module.css"
-import { DeleteCandidate } from "../../../pages/CommitteeDashboard/DeleteCandidate";
+import { DeleteCandidate } from "../DeleteConfirmation";
 import { MdDelete, MdEdit } from "react-icons/md";
 
 export const ListingGrid = ({
+    setID,
+    id,
     headings,
     data,
     isLoading,
@@ -13,7 +15,6 @@ export const ListingGrid = ({
     electionType
 }) => {
     const [isDeleteModalOpen, setIsDeleteModelOpen] = useState(false);
-    const [id, setID] = useState();
 
     return (
         <>

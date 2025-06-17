@@ -41,3 +41,27 @@ exports.userLogin = async (req, res) => {
         });
     });
 }
+
+exports.getUsers = (req, res) => {
+    const { email, user_type } = req.query;
+    console.log(req.query)
+
+    if (email && user_type) {
+        Users.getUserDetailByEmail(email, user_type, (err, result) => {
+            console.log('first')
+            if (err) res.status(500).send(err);
+            if (result.length === 0) {
+                return res.status(404).json({ message: 'No voter found' });
+            }
+            res.status(200).send(result?.[0]);
+        })
+    }
+    else {
+        Users.getAll((err, data) => {
+            console.log('seconf')
+            if (err) res.status(500).send(err);
+            else res.send(data, 'users data');
+        });
+    }
+
+};

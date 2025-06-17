@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./Signup.module.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import { Popup } from "../../Popup";
 import { Modal } from "../../Common/Modal";
 
@@ -18,7 +17,6 @@ export const Signup = ({ onClose, handleLogin }) => {
         type: '',
         msg: ''
     });
-    const navigate = useNavigate()
     const handleUserType = (type) => {
         setValues({ ...values, 'user_type': type })
     }
@@ -43,8 +41,7 @@ export const Signup = ({ onClose, handleLogin }) => {
                 console.log(response)
                 if (response.status === 201) {
                     setMessage({ type: 'success', msg: 'User Registered Successfully!' })
-
-                    navigate("/login");
+                    handleLogin();
                 }
                 console.log(response)
             } catch (err) {

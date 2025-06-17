@@ -4,10 +4,10 @@ const Voters = {
     getAll: (callback) => {
         db.query('SELECT * FROM voters', callback);
     },
-    createVoter: (voter_name, aadhar_id, DOB, gender, email, contact_no, address, callback) => {
-        const sql = `INSERT INTO voters (voter_name, aadhar_id, DOB, gender, email, contact_no, address) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        const values = [voter_name, aadhar_id, DOB, gender, email, contact_no, address];
+    createVoter: (voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, callback) => {
+        const sql = `INSERT INTO voters (voter_name, aadhar_id, DOB, gender, email, contact_no, address,is_registered) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
+        const values = [voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered];
         db.query(sql, values, callback);
     },
     updateVoter: (id, data, callback) => {
@@ -23,6 +23,9 @@ const Voters = {
     },
     getSingleVoter: (id, callback) => {
         db.query(`SELECT * FROM voters WHERE ID=?`, [id], callback)
+    },
+    getSingleVoterByEmail: (email, callback) => {
+        db.query(`SELECT * FROM voters WHERE email=?`, [email], callback)
     },
     getFemaleVotersByCandidateId: (candidate_id, callback) => {
         db.query(`
