@@ -40,8 +40,8 @@ a:focus,a:active{
 
 .primaryButton{
   min-width: 50px;
-  height: 34px;
-  padding:0px 24px;
+  min-height: 34px;
+  padding:10px 24px;
   border-radius: 8px;
   border:1px solid gray;
   background-color: var(--btn-bg-color);
@@ -49,6 +49,7 @@ a:focus,a:active{
   color:white;
   font-size: var(--m);
   cursor: pointer;
+  text-align: center;
 }
 
 .title{
@@ -70,8 +71,10 @@ a:focus,a:active{
   --btn-bg-color:#273239;
   --error-msg-color:#ff4343;
   --blue-color:#0e4a9c;
-  --purple-color:#6f42c1;
-  --pink-color: #d63384;
-  --tabs-bg-color:#055587;
-  --default-bg-blue:#1F9FF4;
+  --purple-color:#6e42c1b4;
+  --pink-color: #d63384bc;
+  --tabs-bg-color:#159da9ea;
+  --default-bg-blue:#369adebb;
+  --grid-bg-color:#5e6060cc;
+  --grid-odd-row-bg:#ebe9e9;
 }

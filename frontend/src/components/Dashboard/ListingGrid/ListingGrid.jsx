@@ -1,4 +1,6 @@
+import { useState } from "react"
 import styles from "./ListingGrid.module.css"
+import { DeleteCandidate } from "../../../pages/CommitteeDashboard/DeleteCandidate";
 
 export const ListingGrid = ({
     headings,
@@ -6,21 +8,27 @@ export const ListingGrid = ({
     isLoading,
     setEdit,
     handleDelete,
-    setIsAdd
+    setIsAdd,
+    electionType
 }) => {
+    const [isDeleteModalOpen, setIsDeleteModelOpen] = useState(false);
+    const [id, setID] = useState();
 
     return (
         <>
             <div className={styles.listingComponent}>
-                {isLoading ? <div>Loading...</div>
-                    :
-                    <div className={styles.gridOuterComponent}>
-                        <button className={`primaryButton ${styles.addBtn}`} onClick={setIsAdd}>Add Candidate</button>
-                        <div className={styles.gridComponent}>
-                            {headings?.map((title, ind) => (
-                                <div key={ind} className={styles.tab}>{title}</div>
-                            ))}
-                        </div>
+                <div className={styles.top}>
+                    <div className={styles.heading}>List of {electionType} Candidates</div>
+                    <button className={`primaryButton ${styles.addBtn}`} onClick={setIsAdd}>Add Candidate</button>
+                </div>
+                <div className={styles.gridOuterComponent}>
+                    <div className={styles.gridComponent}>
+                        {headings?.map((title, ind) => (
+                            <div key={ind} className={styles.tab}>{title}</div>
+                        ))}
+                    </div>
+                    {isLoading ? <div>Loading...</div>
+                        :
                         <div className={styles.gridInnerComponent}>
                             {data?.map((detail, ind) => (
                                 <div className={styles.gridComponent} key={ind}>
@@ -29,16 +37,32 @@ export const ListingGrid = ({
                                     <div className={styles.details}>{detail?.nomination_location} </div>
                                     <div className={styles.details}>{detail?.party} </div>
                                     <div className={`${styles.details} ${styles.actions}`}>
-                                        <div className={styles.action} onClick={() => setEdit(detail?.ID)}>Edit</div>
+                                        <div className={styles.action}
+                                            onClick={() => setEdit(detail?.ID)}
+                                        >Edit</div>
                                         <span>/</span>
-                                        <div className={styles.action} onClick={() => handleDelete(detail?.ID)}>Delete</div>
+                                        <div className={styles.action}
+                                            onClick={() => {
+                                                setID(detail?.ID);
+                                                setIsDeleteModelOpen(true)
+                                            }}
+                                        >Delete</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
+            {isDeleteModalOpen &&
+                <DeleteCandidate
+                    handleDeleteCandidate={() => handleDelete(id)}
+                    handleCancel={() => {
+                        setID();
+                        setIsDeleteModelOpen(false)
+                    }}
+                />
+            }
         </>
     )
 }

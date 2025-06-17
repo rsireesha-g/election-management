@@ -13,6 +13,8 @@ import {
 import { useGetElectionsDataQuery } from '../../redux/queries/elections';
 import { Modal } from '../../components/Common/Modal';
 import { TabComponent } from '../../components/Dashboard/TabComponent';
+import { AddCandidate } from './AddCandidate';
+import { EditCandidate } from './EditCandidate';
 
 const initialData = {
     candidate_name: '',
@@ -53,7 +55,7 @@ export const Dashboard = () => {
         }
     }
 
-    const handleEditCandidate = (e) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setCandidateDetails({ ...candidateDetails, [name]: value })
     }
@@ -89,11 +91,11 @@ export const Dashboard = () => {
             let y = x?.toISOString()?.split("T")?.[0];
             setCandidateDetails({ ...candidate?.[0], "DOB": y });
         }
-    }, [id])
+    }, [candidate, id])
 
     return (
-        <Layout title='Commitee Dashboard' >
-            <h2 className={styles.title}>Welcome User!</h2>
+        <Layout title='Dashboard' >
+            <h2 className={styles.title}>Committee Dashboard</h2>
             <TabComponent
                 tabType={'mainTabs'}
                 tabs={['Committee', 'Candidates']}
@@ -109,6 +111,7 @@ export const Dashboard = () => {
                 }}
             />
             <ListingGrid
+                electionType={activeElectionType}
                 headings={['S.No', 'Name', 'Place', 'Party', 'Actions']}
                 data={data || []}
                 isLoading={isLoading}
@@ -119,126 +122,31 @@ export const Dashboard = () => {
                 handleDelete={handleDeleteCandidate}
                 setIsAdd={() => setIsAdd((prev) => !prev)}
             ></ListingGrid>
-            {isEdit &&
-                <Modal >
-                    <div className={styles.innerModal}>
-                        <div className={styles.editForm}>
-                            <h2 className={styles.title}>Edit Candidate Details</h2>
-                            <button onClick={() => {
-                                setId('');
-                                setIsEdit(false);
-                                setCandidateDetails(initialData);
-                            }} className={styles.closeBtn}>✕</button>
 
-                            <div className={styles.details}>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Candidate Name</div>
-                                    <input className={styles.inputField} name="candidate_name" defaultValue={candidateDetails?.candidate_name} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Aadhar Details</div>
-                                    <input className={styles.inputField} name="aadhar_id" defaultValue={candidateDetails?.aadhar_id} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Contact Number</div>
-                                    <input className={styles.inputField} name="contact_no" defaultValue={candidateDetails?.contact_no} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Email</div>
-                                    <input className={styles.inputField} name="email" defaultValue={candidateDetails?.email} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Gender</div>
-                                    <input className={styles.inputField} name="gender" defaultValue={candidateDetails?.gender} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Date Of Birth</div>
-                                    <input className={styles.inputField} name="DOB" defaultValue={candidateDetails?.DOB} disabled />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Election Type</div>
-                                    <input className={styles.inputField} name="election_type" defaultValue={candidateDetails?.election_type} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Address</div>
-                                    <input className={styles.inputField} name="address" defaultValue={candidateDetails?.address} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Party</div>
-                                    <input className={styles.inputField} name="party" defaultValue={candidateDetails?.party} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Nomination Location</div>
-                                    <input className={styles.inputField} name="nomination_location" defaultValue={candidateDetails?.nomination_location} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div>
-                                </div>
-                            </div>
-                            <button className={'primaryButton'} onClick={handleUpdate}>Update</button>
-                        </div>
-                    </div>
-                </Modal>
+            {isEdit &&
+                <EditCandidate
+                    onClose={() => {
+                        setId();
+                        setIsEdit(false);
+                        setCandidateDetails(initialData);
+                    }}
+                    candidate={candidateDetails}
+                    handleChange={handleChange}
+                    handleUpdate={handleUpdate}
+                />
             }
 
             {isAdd &&
-                <Modal >
-                    <div className={styles.innerModal}>
-                        <div className={styles.editForm}>
-                            <h2 className={styles.title}>Add Candidate Details</h2>
-                            <button onClick={() => {
-                                setIsAdd(false)
-                            }} className={styles.closeBtn}>✕</button>
-
-                            <div className={styles.details}>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Candidate Name</div>
-                                    <input className={styles.inputField} name="candidate_name" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Aadhar Details</div>
-                                    <input className={styles.inputField} name="aadhar_id" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Contact Number</div>
-                                    <input className={styles.inputField} name="contact_no" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Email</div>
-                                    <input className={styles.inputField} name="email" defaultValue={candidateDetails?.email} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Date Of Birth</div>
-                                    <input className={styles.inputField} name="DOB" defaultValue={candidateDetails?.DOB} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Gender</div>
-                                    <input className={styles.inputField} name="gender" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Election Type</div>
-                                    <input className={styles.inputField} name="election_type" defaultValue={activeElectionType} onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Address</div>
-                                    <input className={styles.inputField} name="address" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Party</div>
-                                    <input className={styles.inputField} name="party" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div className={styles.card}>
-                                    <div className={styles.detailsLabel}>Nomination Location</div>
-                                    <input className={styles.inputField} name="nomination_location" onChange={(e) => handleEditCandidate(e)} />
-                                </div>
-                                <div>
-                                </div>
-
-                            </div>
-                            <button className={'primaryButton'} onClick={handleAdd}>Update</button>
-                        </div>
-                    </div>
-                </Modal>
+                <AddCandidate
+                    onClose={() => {
+                        setIsAdd(false)
+                    }}
+                    handleAdd={handleAdd}
+                    handleChange={handleChange}
+                    activeElectionType={activeElectionType}
+                />
             }
+
         </Layout >
     )
 }

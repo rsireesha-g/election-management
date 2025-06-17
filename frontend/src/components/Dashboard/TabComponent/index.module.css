@@ -14,9 +14,11 @@
   border:1px solid #000;
   border-radius: 4px;
   padding: 0.5rem 0.8rem;
+  cursor: pointer;
 }
 .activeTab{
-    background-color: var(--default-bg-blue);
+    background-color: var(--secondary-color);
+    color:var(--tabs-bg-color)
 }
 
 .typesComponent{
@@ -30,12 +32,16 @@
   font-size: var(--l);
   color:var(--secondary-color);
   font-weight:400;
-  border:2px solid var(--default-bg-blue);
-  border-radius: 4px;
+  border:2px solid var(--tabs-bg-color);
   padding: 0.5rem 0.8rem;
   background-color: #999;
+  cursor: pointer;
+}
+.typesComponent .type:nth-child(even){
+  border-width:2px 0px;
 }
 .activeType{
     background-color: var(--tabs-bg-color);
     border:2px solid #000;
+    border-width: 2px !important;
 }

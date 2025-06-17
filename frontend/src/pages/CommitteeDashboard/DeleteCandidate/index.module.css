@@ -1,0 +1,29 @@
+.innerModal{
+    min-width:200px;
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 10%);
+    margin:auto;
+    padding: 2rem 1.5rem;
+}
+.heading{
+    font-size: var(--xl);
+    font-weight:600;
+}
+.buttonFlex{
+    width:100%;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:1rem;
+    margin-top: 1.5rem;
+}
+.cancelBtn{
+    /* background-color: var(--secondary-color);
+    color:var(--error-msg-color); */
+    font-weight: 600;
+}
+.deleteBtn{
+    background-color: var(--secondary-color);
+    color:var(--error-msg-color);
+    font-weight: 600;
+}
