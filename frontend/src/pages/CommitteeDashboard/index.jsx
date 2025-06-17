@@ -56,7 +56,7 @@ export const Dashboard = () => {
     }
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        var { name, value } = e.target;
         setCandidateDetails({ ...candidateDetails, [name]: value })
     }
 
@@ -71,12 +71,12 @@ export const Dashboard = () => {
             console.log(err)
         }
     }
-    const handleValidations = () => {
-        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    // const handleValidations = () => {
+    //     const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
 
-    }
+    // }
     const handleAdd = async () => {
-        const isValidated = handleValidations();
+        // const isValidated = handleValidations();
         try {
             console.log(candidateDetails);
             const data = candidateDetails;

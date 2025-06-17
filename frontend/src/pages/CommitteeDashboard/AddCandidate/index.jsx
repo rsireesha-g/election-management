@@ -13,27 +13,52 @@ export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionT
                     <div className={styles.details}>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Candidate Name</div>
-                            <input className={styles.inputField} name="candidate_name" placeholder='Eg: Nehru' onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                name="candidate_name"
+                                placeholder='Eg: Nehru'
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                onChange={(e) => handleChange(e)}
+                            />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Aadhar Details</div>
-                            <input className={styles.inputField} name="aadhar_id" placeholder="Eg:9999-9999-9999" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    let enteredVal = e.target.value.replace(/\D/g, '').slice(0, 12);
+                                    let changedVal = enteredVal.match(/.{1,4}/g)?.join('-') || '';
+                                    e.target.value = changedVal;
+                                }}
+                                maxLength={14} name="aadhar_id" placeholder="Eg:9999-9999-9999" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Contact Number</div>
-                            <input className={styles.inputField} name="contact_no" placeholder='Eg: 9999999999' onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                }}
+                                maxLength={10} name="contact_no" placeholder='Eg: 9999999999' onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Email</div>
-                            <input className={styles.inputField} name="email" placeholder="Eg: abc@gmail.com" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^\w.@+-]/g, '').toLowerCase();
+                                }}
+                                name="email" placeholder="Eg: abc@gmail.com" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Date Of Birth (YYYY-MM-DD)</div>
-                            <input className={styles.inputField} name="DOB" placeholder="Eg: 2020-02-02" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField} maxLength={10} name="DOB" placeholder="Eg: 2020-02-02" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Gender</div>
-                            <input className={styles.inputField} name="gender" placeholder="Gender" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField} name="gender"
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                placeholder="Gender" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Election Type</div>
@@ -45,11 +70,19 @@ export const AddCandidate = ({ onClose, handleAdd, handleChange, activeElectionT
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Party Name</div>
-                            <input className={styles.inputField} name="party" placeholder="Party Name" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField} name="party"
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                placeholder="Party Name" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Nomination Location</div>
-                            <input className={styles.inputField} name="nomination_location" placeholder="Nomination location" onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                name="nomination_location" placeholder="Nomination location" onChange={(e) => handleChange(e)} />
                         </div>
                         <div>
                         </div>

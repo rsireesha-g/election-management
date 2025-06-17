@@ -38,19 +38,35 @@ export const EditCandidate = ({ onClose, candidate, handleChange, handleUpdate }
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Election Type</div>
-                            <input className={styles.inputField} name="election_type" defaultValue={candidate?.election_type} onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField} name="election_type" defaultValue={candidate?.election_type}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Address</div>
-                            <input className={styles.inputField} name="address" defaultValue={candidate?.address} onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                name="address" defaultValue={candidate?.address} onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Party</div>
-                            <input className={styles.inputField} name="party" defaultValue={candidate?.party} onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                name="party" defaultValue={candidate?.party} onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Nomination Location</div>
-                            <input className={styles.inputField} name="nomination_location" defaultValue={candidate?.nomination_location} onChange={(e) => handleChange(e)} />
+                            <input className={styles.inputField}
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                name="nomination_location" defaultValue={candidate?.nomination_location} onChange={(e) => handleChange(e)} />
                         </div>
                         <div>
                         </div>

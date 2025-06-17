@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { HomePage } from './pages/HomePage';
-import { Login } from './pages/Login';
-import { Signup } from './pages/Signup';
+// import { Login } from './pages/Login';
+// import { Signup } from './components/Main/Signup';
 import { Dashboard as VoterDashboard } from './pages/VoterDashboard';
 import { Dashboard as CommitteeDashboard } from './pages/CommitteeDashboard';
 import { CommitteePrivateRoute } from './components/Main/PrivateRoute/committee';
@@ -13,8 +13,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      {/* <Route path="/login" element={<Login />} /> */}
+      {/* <Route path="/signup" element={<Signup />} /> */}
       <Route path="/voter/dashboard" element={
         <VoterPrivateRoute>
           <VoterDashboard />
