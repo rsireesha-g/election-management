@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Layout } from '../../components/Layout'
-import { ListingGrid } from '../../components/ListingGrid/ListingGrid'
-import styles from "./dashboard.module.css";
-import axios from 'axios';
-import { useAddCandidateDataMutation, useDeleteCandidateDataMutation, useGetCandidateDataByElectionTypeQuery, useGetCandidateDetailsByIdQuery, useGetCandidatesDataQuery, useUpdateCandidateDataMutation } from '../../redux/queries/candidates';
+import { Layout } from '../../components/Dashboard/Layout'
+import { ListingGrid } from '../../components/Dashboard/ListingGrid/ListingGrid'
+import styles from "./index.module.css";
+import {
+    useAddCandidateDataMutation,
+    useDeleteCandidateDataMutation,
+    useGetCandidateDataByElectionTypeQuery,
+    useGetCandidateDetailsByIdQuery,
+    useGetCandidatesDataQuery,
+    useUpdateCandidateDataMutation
+} from '../../redux/queries/candidates';
 import { useGetElectionsDataQuery } from '../../redux/queries/elections';
-import { Modal } from '../../components/Modal';
+import { Modal } from '../../components/Common/Modal';
+import { TabComponent } from '../../components/Dashboard/TabComponent';
 
 const initialData = {
     candidate_name: '',
@@ -87,15 +94,21 @@ export const Dashboard = () => {
     return (
         <Layout title='Commitee Dashboard' >
             <h2 className={styles.title}>Welcome User!</h2>
-            <ListingGrid
+            <TabComponent
+                tabType={'mainTabs'}
                 tabs={['Committee', 'Candidates']}
-                electionTypes={electionData || []}
                 activeTab={activeTab}
                 handleTabSelect={(tab) => setActiveTab(tab === activeTab ? "" : tab)}
-                activeType={activeElectionType}
-                handleTypeSelect={(type) => {
+            />
+            <TabComponent
+                tabType={'electionTab'}
+                tabs={electionData || []}
+                activeTab={activeElectionType}
+                handleTabSelect={(type) => {
                     setActiveElectionType(activeElectionType === type ? '' : type)
                 }}
+            />
+            <ListingGrid
                 headings={['S.No', 'Name', 'Place', 'Party', 'Actions']}
                 data={data || []}
                 isLoading={isLoading}

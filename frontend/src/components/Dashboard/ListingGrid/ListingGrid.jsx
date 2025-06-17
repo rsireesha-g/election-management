@@ -1,16 +1,6 @@
-import { useEffect } from "react"
 import styles from "./ListingGrid.module.css"
-import axios from "axios";
-import { TabComponent } from "../TabComponent";
-import { ElectionTabComponent } from "../ElectionTabComponent";
 
 export const ListingGrid = ({
-    tabs,
-    handleTabSelect,
-    activeTab,
-    electionTypes,
-    activeType,
-    handleTypeSelect,
     headings,
     data,
     isLoading,
@@ -22,16 +12,6 @@ export const ListingGrid = ({
     return (
         <>
             <div className={styles.listingComponent}>
-                <TabComponent
-                    tabs={tabs}
-                    handleTabSelect={handleTabSelect}
-                    activeTab={activeTab}
-                />
-                <ElectionTabComponent
-                    types={electionTypes}
-                    handleTypeSelect={activeTab ? handleTypeSelect : () => { }}
-                    activeType={activeType}
-                />
                 {isLoading ? <div>Loading...</div>
                     :
                     <div className={styles.gridOuterComponent}>

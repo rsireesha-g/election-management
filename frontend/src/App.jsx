@@ -3,10 +3,10 @@ import './App.css';
 import { HomePage } from './pages/HomePage';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
-import { Dashboard as VoterDashboard } from './pages/Voter/Dashboard';
-import { Dashboard as CommitteeDashboard } from './pages/Committee/Dashboard';
-import { VoterPrivateRoute } from './components/PrivateRoute/voter';
-import { CommitteePrivateRoute } from './components/PrivateRoute/committee';
+import { Dashboard as VoterDashboard } from './pages/VoterDashboard';
+import { Dashboard as CommitteeDashboard } from './pages/CommitteeDashboard';
+import { CommitteePrivateRoute } from './components/Main/PrivateRoute/committee';
+import { VoterPrivateRoute } from './components/Main/PrivateRoute/voter';
 
 function App() {
 
