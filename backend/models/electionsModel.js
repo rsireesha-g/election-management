@@ -14,14 +14,14 @@ const Elections = {
     deleteElection: (id, callback) => {
         db.query(`DELETE FROM Votes WHERE election_id=${id}`, (err) => {
             if (err) return callback(err)
-            db.query(`DELETE FROM election WHERE ID=${id}`, callback);
+            db.query(`DELETE FROM election WHERE id=${id}`, callback);
         })
     },
     updateElection: (id, election_type, callback) => {
-        db.query(`UPDATE election SET election_type=? WHERE ID=?`, [election_type, id], callback)
+        db.query(`UPDATE election SET election_type=? WHERE id=?`, [election_type, id], callback)
     },
     getSingleElectionType: (id, callback) => {
-        db.query(`SELECT * FROM election WHERE ID=${id}`, callback)
+        db.query(`SELECT * FROM election WHERE id=${id}`, callback)
     }
 }
 

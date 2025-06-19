@@ -3,6 +3,7 @@ const Voters = require('../models/votersModel');
 exports.getAllVoters = (req, res) => {
     const { id } = req.params;
     const { email } = req.query;
+    console.log(email, 'controller')
 
     if (id) {
         Voters.getSingleVoter(id, (err, result) => {
@@ -20,7 +21,7 @@ exports.getAllVoters = (req, res) => {
             if (result.length === 0) {
                 return res.status(404).json({ message: 'No voter found' });
             }
-            res.status(200).send(result);
+            res.status(200).send(result?.[0]);
         })
     }
 

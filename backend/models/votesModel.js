@@ -11,15 +11,15 @@ const Votes = {
             callback)
     },
     deleteVote: (id, callback) => {
-        db.query(`DELETE FROM Votes WHERE ID=${id}`, callback);
+        db.query(`DELETE FROM Votes WHERE id=${id}`, callback);
     },
     updateVote: (id, data, callback) => {
         const { voter_id, candidate_id, election_id } = data;
-        const sql = `UPDATE votes SET voter_id = ?, candidate_id = ?, election_id = ? WHERE ID = ?`;
+        const sql = `UPDATE votes SET voter_id = ?, candidate_id = ?, election_id = ? WHERE id = ?`;
         db.query(sql, [voter_id, candidate_id, election_id, id], callback);
     },
     getSingleVote: (id, callback) => {
-        db.query(`SELECT * FROM votes WHERE ID=${id}`, callback)
+        db.query(`SELECT * FROM votes WHERE id=${id}`, callback)
     },
 
 }

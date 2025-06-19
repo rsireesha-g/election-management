@@ -11,7 +11,7 @@ components:
     voter:
       type: object
       properties:
-       ID:
+       id:
         type: integer
        voter_name:
         type: string
@@ -32,7 +32,7 @@ components:
     candidate:
       type: object
       properties:
-       ID:
+       id:
         type: integer
        candidate_name:
         type: string
@@ -55,14 +55,14 @@ components:
     election:
       type: object
       properties:
-       ID:
+       id:
         type: integer
        election_type:
         type: string
     vote:
       type: object
       properties:
-       ID:
+       id:
         type: integer
        voter_id:
         type: integer
@@ -365,7 +365,7 @@ paths:
           description: Vote deleted successfully
         '400':
           description: Invalid id
-  /voters/femaleVotersCountByCandidateId/{candidate_id}:
+  /voters/femaleVotersCountByCandidateid/{candidate_id}:
    get:
     summary: Q1 Get the count of female voters for a particular candidate
     parameters:
@@ -376,7 +376,7 @@ paths:
             type: integer
     responses:
      '200':
-       description: A JSON array of vote count and candidate ID objects
+       description: A JSON array of vote count and candidate id objects
        content:
         application/json:
          schema:
@@ -387,7 +387,7 @@ paths:
              voter_name:
               type: string
      '400':
-       description: Invalid ID
+       description: Invalid id
        '500':
           description: Internal server error
           content:

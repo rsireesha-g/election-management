@@ -13,7 +13,7 @@ const Candidates = {
         db.query(`DELETE FROM Votes WHERE candidate_id=${id}`, (err) => {
             if (err) return callback(err)
 
-            db.query(`DELETE FROM candidates WHERE ID=${id}`, callback);
+            db.query(`DELETE FROM candidates WHERE id=${id}`, callback);
         })
     },
     updateCandidate: (id, data, callback) => {
@@ -22,16 +22,16 @@ const Candidates = {
         const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=?, party=?, nomination_location=? WHERE id = ?`;
         db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location, id], callback);
     },
-    getCandidateById: (id, callback) => {
-        db.query(`SELECT * FROM candidates WHERE ID=${id}`, callback)
+    getCandidateByid: (id, callback) => {
+        db.query(`SELECT * FROM candidates WHERE id=${id}`, callback)
     },
 
     getCandidateNameByElectionType: (election_type, callback) => {
         db.query(`SELECT * FROM candidates WHERE election_type=?`, [election_type], callback);
     },
     getCandidatesCountByElectionType: (callback) => {
-        db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.ID) AS 'count'  FROM Candidates 
-        JOIN votes ON candidates.ID=votes.candidate_id
+        db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.id) AS 'count'  FROM Candidates 
+        JOIN votes ON candidates.id=votes.candidate_id
         JOIN election ON election.id=votes.election_id
         GROUP BY votes.election_id,candidates.candidate_name`, callback)
     },
@@ -41,15 +41,15 @@ const Candidates = {
     },
     getCountByCandidate: (callback) => {
         const sql = `
-        SELECT candidates.candidate_name,COUNT(votes.ID) AS 'count'  
+        SELECT candidates.candidate_name,COUNT(votes.id) AS 'count'  
         FROM Candidates 
-        JOIN votes ON candidates.ID=votes.candidate_id
+        JOIN votes ON candidates.id=votes.candidate_id
         GROUP BY candidates.candidate_name`;
         db.query(sql, callback);
     },
 
     getCountByCandidateForParliament: (callback) => {
-        const sql = `SELECT candidates.candidate_name,COUNT(votes.ID)  AS 'count' 
+        const sql = `SELECT candidates.candidate_name,COUNT(votes.id)  AS 'count' 
                       FROM candidates
                      JOIN votes WHERE  election_id=1
                      GROUP BY candidate_name`;

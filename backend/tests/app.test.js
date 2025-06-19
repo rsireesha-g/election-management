@@ -15,7 +15,7 @@ afterAll(async () => {
 //     test('Voter object have all the keys', async () => {
 //         const response = await request(app).get('/voters');
 //         if (response.body?.length > 0) {
-//             expect(response.body[0]).toHaveProperty('ID');
+//             expect(response.body[0]).toHaveProperty('id');
 //             expect(response.body[0]).toHaveProperty('voter_name');
 //             expect(response.body[0]).toHaveProperty('aadhar_id');
 //             expect(response.body[0]).toHaveProperty('DOB');
@@ -76,7 +76,7 @@ afterAll(async () => {
 //     test('Candidate object should have all the keys', async () => {
 //         const response = await request(app).get('/candidates');
 //         if (response.body?.length > 0) {
-//             expect(response.body[0]).toHaveProperty('ID');
+//             expect(response.body[0]).toHaveProperty('id');
 //             expect(response.body[0]).toHaveProperty('candidate_name');
 //             expect(response.body[0]).toHaveProperty('aadhar_id');
 //             expect(response.body[0]).toHaveProperty('DOB');
@@ -139,7 +139,7 @@ afterAll(async () => {
 //     test('election object have all the keys', async () => {
 //         const response = await request(app).get('/elections');
 //         if (response.body?.length > 0) {
-//             expect(response.body[0]).toHaveProperty('ID');
+//             expect(response.body[0]).toHaveProperty('id');
 //             expect(response.body[0]).toHaveProperty('election_type');
 //         }
 //     });
@@ -179,7 +179,7 @@ afterAll(async () => {
 //     test('vote object have all the keys', async () => {
 //         const response = await request(app).get('/votes');
 //         if (response.body?.length > 0) {
-//             expect(response.body[0]).toHaveProperty('ID');
+//             expect(response.body[0]).toHaveProperty('id');
 //             expect(response.body[0]).toHaveProperty('voter_id');
 //             expect(response.body[0]).toHaveProperty('candidate_id');
 //             expect(response.body[0]).toHaveProperty('election_id');
@@ -219,7 +219,7 @@ afterAll(async () => {
 
 // describe('Queries Votes API', () => {
 //     test('Q1 should show all the female voters for a particular candidate', async () => {
-//         const response = await request(app).get('/voters/femaleVotersCountByCandidateId/9');
+//         const response = await request(app).get('/voters/femaleVotersCountByCandidateid/9');
 //         // console.log(response.body);
 //         expect(response.statusCode).toBe(200);
 //         if (response.body?.length > 0) {

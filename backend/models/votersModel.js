@@ -18,19 +18,19 @@ const Voters = {
     deleteVoter: (id, callback) => {
         db.query(`DELETE FROM Votes WHERE voter_id=${id}`, (err) => {
             if (err) return callback(err)
-            db.query(`DELETE FROM Voters WHERE ID=${id}`, callback);
+            db.query(`DELETE FROM Voters WHERE id=${id}`, callback);
         });
     },
     getSingleVoter: (id, callback) => {
-        db.query(`SELECT * FROM voters WHERE ID=?`, [id], callback)
+        db.query(`SELECT * FROM voters WHERE id=?`, [id], callback)
     },
     getSingleVoterByEmail: (email, callback) => {
         db.query(`SELECT * FROM voters WHERE email=?`, [email], callback)
     },
-    getFemaleVotersByCandidateId: (candidate_id, callback) => {
+    getFemaleVotersByCandidateid: (candidate_id, callback) => {
         db.query(`
             SELECT voter_name FROM Voters WHERE gender='Female' 
-            AND ID IN (
+            AND id IN (
              SELECT voter_id FROM Votes WHERE candidate_id=?
             )`,
             [candidate_id], callback)
@@ -44,7 +44,7 @@ const Voters = {
         SELECT voter_name FROM Voters 
         WHERE gender='Male' 
         AND TIMESTAMPDIFF(YEAR, DOB, CURDATE())>50 
-        AND ID IN (
+        AND id IN (
         SELECT voter_id FROM Votes WHERE election_id=1)`;
         db.query(sql, callback)
     }
