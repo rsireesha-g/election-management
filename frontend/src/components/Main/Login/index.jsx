@@ -49,7 +49,7 @@ export const Login = ({ onClose, handleExistingAcc }) => {
                     localStorage.setItem('user_type', response?.data?.user?.user_type);
                     localStorage.setItem('email', response?.data?.user?.email);
                     setMessage({ type: 'success', msg: 'User Login Successful!' });
-                    if (response?.data?.user?.user_type === 'voter') navigate(`/dashboard/voter}`)
+                    if (response?.data?.user?.user_type === 'voter') navigate(`/dashboard/voter`)
                     if (response?.data?.user?.user_type === 'committee') navigate("/dashboard/committee")
                 }
             } catch (err) {

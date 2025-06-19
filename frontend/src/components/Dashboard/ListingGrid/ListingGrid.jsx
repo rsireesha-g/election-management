@@ -40,13 +40,13 @@ export const ListingGrid = ({
                                     <div className={styles.details}>{detail?.party} </div>
                                     <div className={`${styles.details} ${styles.actions}`}>
                                         <div className={styles.action}
-                                            onClick={() => setEdit(detail?.ID)}
+                                            onClick={() => setEdit(detail?.id)}
                                             title={'Edit'}
                                         ><MdEdit /></div>
                                         <span>|</span>
                                         <div className={styles.action}
                                             onClick={() => {
-                                                setID(detail?.ID);
+                                                setID(detail?.id);
                                                 setIsDeleteModelOpen(true)
                                             }}
                                             title="Delete"

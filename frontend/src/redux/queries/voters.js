@@ -19,12 +19,21 @@ export const votersApi = createApi({
                 body: data
             }),
             invalidatesTags: ['voters']
+        }),
+        updateVoter: builder.mutation({
+            query: (data) => ({
+                url: `/voters/${data?.id}`,
+                method: 'put',
+                body: data
+            }),
+            invalidatesTags: ['voters']
         })
     })
 })
 
 export const {
     useGetVoterDetailQuery,
-    useCreateVoterMutation
+    useCreateVoterMutation,
+    useUpdateVoterMutation
 
 } = votersApi;
