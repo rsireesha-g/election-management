@@ -1,5 +1,5 @@
 import styles from "./Header.module.css"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { BsPersonCircle } from "react-icons/bs";
 import { AiOutlineLogout } from "react-icons/ai";
@@ -7,6 +7,10 @@ import { FaRegFileImage } from "react-icons/fa";
 import { useState } from "react";
 
 export const Header = ({ type }) => {
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('user_id');
+    console.log(id, 'header')
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const Navigate = useNavigate()
@@ -15,7 +19,6 @@ export const Header = ({ type }) => {
         localStorage.removeItem('user_type');
         Navigate("/")
     }
-    console.log(isDropdownOpen)
     return (
         <header className={styles.header}>
             {
@@ -41,8 +44,8 @@ export const Header = ({ type }) => {
                         {isDropdownOpen &&
                             <div className={styles.dropdownWrapper}>
                                 <div className={styles.dropdown}>
-                                    <div className={styles.itemBox}><FaRegFileImage /> <Link to="/dashboard/voter/register">Register</Link></div>
-                                    <div className={styles.itemBox}> <BsPersonCircle /> <Link to="/dashboard/voter/myProfile">My Profile</Link></div>
+                                    <div className={styles.itemBox}><FaRegFileImage /> <Link to={`/dashboard/voter/register?user_id=${id}`}>Register</Link></div>
+                                    <div className={styles.itemBox}> <BsPersonCircle /> <Link to={`/dashboard/voter/myProfile?user_id=${id}`}>My Profile</Link></div>
                                     <div className={styles.itemBox}> <AiOutlineLogout /> <div onClick={handleLogout}>Logout</div></div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 
 
 export const EditVoter = ({ onClose, voterDetails, handleChange, handleUpdate }) => {
+    console.log(voterDetails, 'edit voter')
     return (
         <Modal >
             <div className={styles.innerModal}>
@@ -45,7 +46,6 @@ export const EditVoter = ({ onClose, voterDetails, handleChange, handleUpdate })
                                     onInput={(e) => {
                                         e.target.value = e.target.value.replace(/[^\w.@+-]/g, '').toLowerCase();
                                     }}
-                                    disabled
                                     name="email" placeholder="Eg: abc@gmail.com" onChange={(e) => handleChange(e)} />
                             </div>
                             <div className={styles.card}>
@@ -60,6 +60,13 @@ export const EditVoter = ({ onClose, voterDetails, handleChange, handleUpdate })
                                     disabled
                                     defaultValue={voterDetails?.gender}
                                     placeholder="Gender" />
+                            </div>
+                            <div className={styles.card}>
+                                <div className={styles.detailsLabel}>Nationality</div>
+                                <input className={styles.inputField} name="nationality"
+                                    disabled
+                                    defaultValue={voterDetails?.gender}
+                                    placeholder="Indian" />
                             </div>
                             <div className={styles.card}>
                                 <div className={styles.detailsLabel}>Full Address</div>

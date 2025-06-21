@@ -26,8 +26,8 @@ const Users = {
     getAll: (callback) => {
         db.query('SELECT * FROM users', callback);
     },
-    getUserDetailByEmail: (email, user_type, callback) => {
-        db.query(`SELECT * FROM users WHERE email=? AND user_type=?`, [email, user_type], callback)
+    getUserDetailByUserId: (user_id, callback) => {
+        db.query(`SELECT * FROM users WHERE id=?`, [user_id], callback)
     }
 };
 

@@ -43,13 +43,12 @@ exports.userLogin = async (req, res) => {
 }
 
 exports.getUsers = (req, res) => {
-    const { email, user_type } = req.query;
-    console.log(req.query)
+    const { user_id } = req.query;
 
-    if (email && user_type) {
-        Users.getUserDetailByEmail(email, user_type, (err, result) => {
-            console.log('first')
-            if (err) res.status(500).send(err);
+
+    if (user_id) {
+        Users.getUserDetailByUserId(user_id, (err, result) => {
+            if (err) return res.status(500).send(err);
             if (result.length === 0) {
                 return res.status(404).json({ message: 'No voter found' });
             }
@@ -58,8 +57,7 @@ exports.getUsers = (req, res) => {
     }
     else {
         Users.getAll((err, data) => {
-            console.log('seconf')
-            if (err) res.status(500).send(err);
+            if (err) return res.status(500).send(err);
             else res.send(data, 'users data');
         });
     }

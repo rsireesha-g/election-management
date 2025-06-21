@@ -3,24 +3,31 @@ import { Layout } from '../../../../components/Dashboard/Layout'
 import { useGetVoterDetailQuery, useUpdateVoterMutation } from '../../../../redux/queries/voters';
 import styles from "./index.module.css";
 import { EditVoter } from './EditVoter';
+import { useGetVoterDetails } from '../../../../redux/hooks/voter';
+import { useSearchParams } from 'react-router-dom';
 
 
 export const MyProfile = () => {
     const email = localStorage.getItem('email');
-    console.log(email)
+    const [searchParams] = useSearchParams();
+    const user_id = searchParams.get('user_id');
 
-    const { data: voterData, isLoading } = useGetVoterDetailQuery(email, { skip: !email })
-    const [address, setAddress] = useState('');
+    // const { data: voterDetails, isLoading } = useGetVoterDetailQuery(email, { skip: !email })
+    const [address, setAddress] = useState({ address: '', email: '' });
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
     const handleChange = (e) => {
-        setAddress(e.target.value);
+        var { name, value } = e.target;
+        setAddress({ ...address, [name]: value });
     }
+    const { voterDetails, is_registered } = useGetVoterDetails(user_id);
+
 
     const [updateVoterDetails] = useUpdateVoterMutation();
     const handleUpdate = async (e) => {
         e.preventDefault();
-        const date = (new Date(voterData?.DOB))?.toISOString()?.split("T")?.[0];
-        const data = { ...voterData, ["address"]: address, ["DOB"]: date };
+        const date = (new Date(voterDetails?.[0]?.DOB))?.toISOString()?.split("T")?.[0];
+        const data = { ...voterDetails?.[0], ["address"]: address?.address || voterDetails?.[0]?.address, ["DOB"]: date, 'email': address?.email };
         try {
             let res = await updateVoterDetails(data);
             res?.data && setIsEditModalOpen(false);
@@ -28,7 +35,7 @@ export const MyProfile = () => {
             console.log(err)
         }
     }
-
+    console.log(voterDetails, 'details')
 
     return (
         <>
@@ -37,13 +44,13 @@ export const MyProfile = () => {
                     <div className={styles.profileAndBtns}>
                         <div className={styles.profileFlex}>
                             <div className={styles.profileIcon}>
-                                {voterData ?
-                                    <p> {(voterData?.voter_name?.split(""))?.splice(0, 2)}</p>
+                                {voterDetails ?
+                                    <p> {(voterDetails?.[0]?.voter_name?.split(""))?.splice(0, 2)}</p>
                                     :
                                     ''
                                 }
                             </div>
-                            <div className={styles.name}>{voterData?.voter_name}</div>
+                            <div className={styles.name}>{voterDetails?.[0]?.voter_name}</div>
                         </div>
                         <div className={styles.btnsFlex}>
                             <button className={`primaryButton ${styles.editBtn}`}
@@ -52,53 +59,53 @@ export const MyProfile = () => {
                         </div>
                     </div>
                     <div className={styles.gridBox}>
-                        {isLoading ?
+                        {/* {isLoading ?
                             <div>Loading...</div>
-                            :
-                            <>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Name</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.voter_name}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Email ID</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.email}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Contact No</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.contact_no || '---'}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Aadhar Id</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.aadhar_id || '---'}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Date Of Birth</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{(new Date(voterData?.DOB))?.toISOString()?.split("T")?.[0] || '---'}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Gender</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.gender || '---'}</div>
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.label}>Address</div>
-                                    <div>:</div>
-                                    <div className={styles.value}>{voterData?.address || '---'}</div>
-                                </div>
-                            </>
-                        }
+                            : */}
+                        <>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Name</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.voter_name}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Email ID</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.email}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Contact No</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.contact_no || '---'}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Aadhar Id</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.aadhar_id || '---'}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Date Of Birth</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.DOB || '---'}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Gender</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.gender || '---'}</div>
+                            </div>
+                            <div className={styles.grid}>
+                                <div className={styles.label}>Address</div>
+                                <div>:</div>
+                                <div className={styles.value}>{voterDetails?.[0]?.address || '---'}</div>
+                            </div>
+                        </>
+                        {/* /* } */}
                     </div>
                 </div>
             </Layout>
             {isEditModalOpen &&
                 <EditVoter
-                    voterDetails={voterData}
+                    voterDetails={voterDetails?.[0]}
                     handleChange={handleChange}
                     handleUpdate={handleUpdate}
                     onClose={() => setIsEditModalOpen(false)}

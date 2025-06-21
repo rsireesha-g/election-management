@@ -5,7 +5,7 @@ export const signUpApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API }),
     endpoints: (builder) => ({
         getUsersData: builder.query({
-            query: ({ email, user_type }) => `/auth/users?email=${email}&user_type=${user_type}`,
+            query: ({ user_id }) => `/auth/users?user_id=${user_id}`,
         }),
 
     }),

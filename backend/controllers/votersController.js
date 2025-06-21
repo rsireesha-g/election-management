@@ -2,32 +2,33 @@ const Voters = require('../models/votersModel');
 
 exports.getAllVoters = (req, res) => {
     const { id } = req.params;
-    const { email } = req.query;
-    console.log(email, 'controller')
+    const { user_id } = req.query;
+    console.log(req.query, 'voter', id);
 
     if (id) {
         Voters.getSingleVoter(id, (err, result) => {
-            if (err) res.status(500).send(err);
+            if (err) return res.status(500).send(err);
             if (result.length === 0) {
                 return res.status(404).json({ message: 'No voter found' });
             }
             res.status(200).send(result);
         });
     }
-    else if (email) {
-        Voters.getSingleVoterByEmail(email, (err, result) => {
-            if (err) res.status(500).send(err);
-            console.log(result)
-            if (result.length === 0) {
-                return res.status(404).json({ message: 'No voter found' });
-            }
-            res.status(200).send(result?.[0]);
+    else if (user_id) {
+        console.log('first')
+        Voters.getSingleVoterByUserId(user_id, (err, result) => {
+            console.log('result', result, err)
+            if (err) return res.status(500).send(err);
+            // if (result.length === 0) {
+            //     return res.status(200).send('Voter is not yet registered');
+            // }
+            res.status(200).send(result);
         })
     }
 
     else {
         Voters.getAll((err, data) => {
-            if (err) res.status(500).send(err);
+            if (err) return res.status(500).send(err);
             else res.send(data, 'voters data');
         });
     }
@@ -36,7 +37,7 @@ exports.getAllVoters = (req, res) => {
 
 exports.createVoter = (req, res) => {
     const data = req.body;
-    const { voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered } = data;
+    const { voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, nationality, user_id } = data;
 
     for (key in data) {
         if (!data[key]) {
@@ -44,7 +45,7 @@ exports.createVoter = (req, res) => {
         }
     }
     console.log(res.error)
-    Voters.createVoter(voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, (err, result) => {
+    Voters.createVoter(voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, nationality, user_id, (err, result) => {
         if (err) {
             console.log(err)
             return res.status(500).json({ error: err.message });
@@ -59,6 +60,7 @@ exports.createVoter = (req, res) => {
 exports.updateVoter = (req, res) => {
     const data = req.body;
     const { id } = req.params;
+    console.log(data, 'controller')
 
     for (key in data) {
         if (!data[key]) {

@@ -4,16 +4,16 @@ const Voters = {
     getAll: (callback) => {
         db.query('SELECT * FROM voters', callback);
     },
-    createVoter: (voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, callback) => {
-        const sql = `INSERT INTO voters (voter_name, aadhar_id, DOB, gender, email, contact_no, address,is_registered) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
-        const values = [voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered];
+    createVoter: (voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, nationality, user_id, callback) => {
+        const sql = `INSERT INTO voters (voter_name, aadhar_id, DOB, gender, email, contact_no, address,is_registered,nationality,user_id) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)`;
+        const values = [voter_name, aadhar_id, DOB, gender, email, contact_no, address, is_registered, nationality, user_id];
         db.query(sql, values, callback);
     },
     updateVoter: (id, data, callback) => {
-        const { voter_name, aadhar_id, DOB, gender, email, contact_no, address } = data;
-        const sql = `UPDATE voters SET voter_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ? WHERE id = ?`;
-        db.query(sql, [voter_name, aadhar_id, DOB, gender, email, contact_no, address, id], callback);
+        const { voter_name, aadhar_id, DOB, gender, email, contact_no, address, nationality, user_id } = data;
+        const sql = `UPDATE voters SET voter_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?, nationality =?,user_id=? WHERE id = ?`;
+        db.query(sql, [voter_name, aadhar_id, DOB, gender, email, contact_no, address, nationality, user_id, id], callback);
     },
     deleteVoter: (id, callback) => {
         db.query(`DELETE FROM Votes WHERE voter_id=${id}`, (err) => {
@@ -24,8 +24,8 @@ const Voters = {
     getSingleVoter: (id, callback) => {
         db.query(`SELECT * FROM voters WHERE id=?`, [id], callback)
     },
-    getSingleVoterByEmail: (email, callback) => {
-        db.query(`SELECT * FROM voters WHERE email=?`, [email], callback)
+    getSingleVoterByUserId: (user_id, callback) => {
+        db.query(`SELECT * FROM voters WHERE user_id=?`, [user_id], callback)
     },
     getFemaleVotersByCandidateid: (candidate_id, callback) => {
         db.query(`

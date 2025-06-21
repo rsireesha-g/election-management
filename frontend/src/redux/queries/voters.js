@@ -6,10 +6,7 @@ export const votersApi = createApi({
     tagTypes: ['voters'],
     endpoints: (builder) => ({
         getVoterDetail: builder.query({
-            query: (email) => ({
-                url: '/voters',
-                params: { email }
-            }),
+            query: ({ user_id }) => `/voters?user_id=${user_id}`,
             providesTags: ['voters']
         }),
         createVoter: builder.mutation({

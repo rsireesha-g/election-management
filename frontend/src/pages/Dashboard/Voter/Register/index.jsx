@@ -4,6 +4,7 @@ import { useGetUsersDataQuery } from '../../../../redux/queries/users'
 import styles from "./index.module.css"
 import { useEffect, useState } from 'react'
 import { useCreateVoterMutation, useGetVoterDetailQuery } from '../../../../redux/queries/voters'
+import { useGetVoterDetails } from '../../../../redux/hooks/voter'
 
 const initialData = {
     voter_name: '',
@@ -12,31 +13,30 @@ const initialData = {
     gender: '',
     address: '',
     email: '',
-    DOB: ''
+    DOB: '',
+    nationality: ''
 }
 
 export const Register = () => {
-    const email = localStorage.getItem("email");
-    const user_type = localStorage.getItem("user_type");
-    const emailEncoded = encodeURIComponent(email);
+    const [searchParams] = useSearchParams();
+    const user_id = searchParams.get('user_id');
+    const { data, is_registered } = useGetVoterDetails(user_id);
 
-
-    const { data, isLoading, error } = useGetUsersDataQuery({ email: emailEncoded, user_type }, { skip: !emailEncoded || !user_type })
-    const [voterDetails, setVoterDetails] = useState(initialData);
     const [createVoter] = useCreateVoterMutation();
-    const [isSuccessfullyRegistered, setIsSuccessfullyRegistered] = useState(false);
-    const { data: voterData } = useGetVoterDetailQuery(email, { skip: !isSuccessfullyRegistered })
-    console.log(isSuccessfullyRegistered, 'register', voterData)
+    const [details, setDetails] = useState(initialData);
+    let [is_reg, setIsReg] = useState(false);
+
     const handleChange = (e) => {
         var { name, value } = e.target;
-        setVoterDetails({ ...voterDetails, [name]: value })
+        setDetails({ ...details, [name]: value });
     }
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            let res = await createVoter({ ...voterDetails, is_registered: true });
-            res?.data && setIsSuccessfullyRegistered(true);
+            console.log('first')
+            let res = await createVoter({ ...details, is_registered: true, user_id: user_id });
+            res?.data && setIsReg(true)
         } catch (err) {
             console.log(err)
         }
@@ -44,24 +44,27 @@ export const Register = () => {
 
     useEffect(() => {
         if (data) {
-            setVoterDetails({ ...voterDetails, "voter_name": data?.user_name, "email": decodeURIComponent(data?.email) });
+            setDetails({ ...details, "voter_name": data?.user_name, "email": data?.email });
         }
     }, [data]);
 
+    console.log(is_reg, is_registered);
+
     return (
         <Layout type='voter'>
-            <h2 className={styles.title}>Welcome {voterDetails?.voter_name || 'Voter'}!</h2>
+            <h2 className={styles.title}>Welcome {data?.user_name || 'Voter'}!</h2>
             <h4 >Please, register your details.</h4>
-            {voterData ?
+            {(is_registered || is_reg) ?
                 <div className={styles.message}>Already Registered!</div>
-                : <form className={styles.form} onSubmit={(e) => handleRegister(e)}>
+                :
+                <form className={styles.form} onSubmit={(e) => handleRegister(e)}>
                     <div className={styles.details}>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Voter Name</div>
                             <input className={styles.inputField}
                                 name="voter_name"
                                 placeholder='Eg: Nehru'
-                                defaultValue={voterDetails?.voter_name}
+                                defaultValue={details?.voter_name}
                                 onInput={(e) => {
                                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
                                 }}
@@ -90,7 +93,7 @@ export const Register = () => {
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Email</div>
                             <input className={styles.inputField}
-                                defaultValue={voterDetails?.email}
+                                defaultValue={details?.email}
                                 onInput={(e) => {
                                     e.target.value = e.target.value.replace(/[^\w.@+-]/g, '').toLowerCase();
                                 }}
@@ -107,6 +110,14 @@ export const Register = () => {
                                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
                                 }}
                                 placeholder="Gender" onChange={(e) => handleChange(e)} />
+                        </div>
+                        <div className={styles.card}>
+                            <div className={styles.detailsLabel}>Nationality</div>
+                            <input className={styles.inputField} name="nationality"
+                                onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
+                                placeholder="Indian" onChange={(e) => handleChange(e)} />
                         </div>
                         <div className={styles.card}>
                             <div className={styles.detailsLabel}>Full Address</div>
