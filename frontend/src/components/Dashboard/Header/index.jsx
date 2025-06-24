@@ -9,7 +9,6 @@ import { useState } from "react";
 export const Header = ({ type }) => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('user_id');
-    console.log(id, 'header')
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -25,7 +24,7 @@ export const Header = ({ type }) => {
                 type === 'committee' &&
                 <div className={styles.flex}>
                     <div className={styles.logo}>
-                        Election Committee Dashboard
+                        <Link to='/dashboard/committee'> Election Committee Dashboard</Link>
                     </div>
                     <div className={styles.btnsFlex}>
                         <button className={`primaryButton ${styles.btn}`} onClick={handleLogout}>Logout</button>
@@ -35,7 +34,7 @@ export const Header = ({ type }) => {
             {type === "voter" &&
                 <div className={styles.flex}>
                     <div className={styles.logo}>
-                        Election Voter Dashboard
+                        <Link to={`/dashboard/voter?user_id=${id}`}>  Election Voter Dashboard</Link>
                     </div>
                     <div className={styles.profileComponent}>
                         <div className={styles.profile} onClick={() => { console.log('first', isDropdownOpen); setIsDropdownOpen(!isDropdownOpen) }}>

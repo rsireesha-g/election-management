@@ -30,15 +30,25 @@ export const Register = () => {
         var { name, value } = e.target;
         setDetails({ ...details, [name]: value });
     }
-
+    const validated = () => {
+        const currYear = (new Date()).getFullYear();
+        let dobYear = (new Date(details?.DOB)).getFullYear();
+        const age = currYear - dobYear;
+        if (details?.nationality === "Indian" && age > 18) {
+            return true
+        }
+        return false
+    }
     const handleRegister = async (e) => {
         e.preventDefault();
-        try {
-            console.log('first')
-            let res = await createVoter({ ...details, is_registered: true, user_id: user_id });
-            res?.data && setIsReg(true)
-        } catch (err) {
-            console.log(err)
+        if (validated()) {
+            try {
+                console.log('first');
+                let res = await createVoter({ ...details, is_registered: true, user_id: user_id });
+                res?.data && setIsReg(true)
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 

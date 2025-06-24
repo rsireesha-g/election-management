@@ -1,0 +1,46 @@
+.card{
+    border:1px solid gray;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 10%);
+    width:minmax(auto,320px);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor:pointer;
+    max-height: 200px;
+}
+.card:hover{
+    border-color:var(--bg-orange);
+}
+.gridProfile{
+    width: 100%;
+    display: grid;
+    grid-template-columns:80px 220px;
+    gap:0.2rem;
+}
+.profileIcon{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+}
+.titleName{
+    font-size: var(--xl);
+    color:var(--primary-color);
+    font-weight:600;
+}
+.grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 5% 65%;
+    gap:0.2rem;
+}
+.title{
+    font-size: var(--l);
+    color:var(--primary-color);
+    font-weight:600;
+    word-break: break-word;
+}
+
+.disable{
+    opacity: 0.7;
+    border:1px solid var(--error-msg-color);
+    cursor: no-drop;
+}

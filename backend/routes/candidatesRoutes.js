@@ -12,7 +12,9 @@ router.get("/election/:election_type", CandidatesController.getCandidateNameByEl
 router.get("/count/byCandidate/byElection", CandidatesController.getCandidatesCountByElectionType);
 router.get('/parliament/count/byCandidate', CandidatesController.getCountByCandidateForParliament);
 router.get('/count/byCandidate', CandidatesController.getCountByCandidate);
-router.get("/parliament/agedCandidates", CandidatesController.getCandidatesAgedForParliament)
+router.get("/parliament/agedCandidates", CandidatesController.getCandidatesAgedForParliament);
+router.get("/byVoter/:voter_id", CandidatesController.getCandidateDetailsByVoterId)
+
 
 
 module.exports = router; 

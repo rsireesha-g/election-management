@@ -11,6 +11,7 @@ exports.getAllVotes = (req, res) => {
 exports.createVote = (req, res) => {
     const data = req.body;
     const { voter_id, candidate_id, election_id } = data;
+    console.log(data, 'vote controller')
 
     for (key in data) {
         if (!data[key]) {

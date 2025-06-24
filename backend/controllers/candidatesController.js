@@ -107,3 +107,12 @@ exports.getCountByCandidateForParliament = (req, res) => {
         res.status(200).send(result)
     })
 }
+
+exports.getCandidateDetailsByVoterId = (req, res) => {
+    const { voter_id } = req.params;
+    Candidates.getCandidateDetailsByVoterId(voter_id, (err, result) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(result)
+    })
+
+}

@@ -1,3 +1,4 @@
+const { getCandidateDetailsByVoterId } = require('../controllers/candidatesController');
 const db = require('../db');
 
 const Candidates = {
@@ -22,7 +23,7 @@ const Candidates = {
         const sql = `UPDATE candidates SET candidate_name = ?, aadhar_id = ?, DOB = ?, gender = ?, email = ?, contact_no = ?, address = ?,election_type=?, party=?, nomination_location=? WHERE id = ?`;
         db.query(sql, [candidate_name, aadhar_id, DOB, gender, email, contact_no, address, election_type, party, nomination_location, id], callback);
     },
-    getCandidateByid: (id, callback) => {
+    getCandidateById: (id, callback) => {
         db.query(`SELECT * FROM candidates WHERE id=${id}`, callback)
     },
 
@@ -54,6 +55,14 @@ const Candidates = {
                      JOIN votes WHERE  election_id=1
                      GROUP BY candidate_name`;
         db.query(sql, callback);
+    },
+
+    getCandidateDetailsByVoterId: (voter_id, callback) => {
+        const sql = `SELECT candidates.candidate_name,candidates.election_type,candidates.id,candidates.party,candidates.nomination_location 
+        FROM candidates
+        JOIN votes ON votes.candidate_id=candidates.id
+        WHERE votes.voter_id=?`;
+        db.query(sql, [voter_id], callback);
     }
 
 

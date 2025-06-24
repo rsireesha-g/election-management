@@ -1,0 +1,47 @@
+.mainTitle{
+    font-size: var(--xxl);
+    font-weight: 500;
+}
+.displayGrid{
+  width: 100%;
+  display:flex;
+  justify-content: space-between;
+  gap:1rem;
+}
+.cardContainer{
+  /* flex-grow: 1; */
+  width:calc(100% - 320px);
+  height: fit-content;
+  display:flex;
+  gap:1rem;
+  flex-wrap: wrap;
+}
+
+.dragDropContainer{
+    border:1px solid gray;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 10%);
+    flex-basis:320px;
+    padding: 1rem;
+    border-radius: 8px;
+    max-height:800px;
+    overflow-y: auto;
+}
+
+.draggedListContainer{
+  display:flex;
+  flex-direction: column;
+  gap:1rem;
+  justify-content: center;
+  align-items: center;
+  font-size:var(--xl);
+  font-weight:600;
+  color:var(--bg-orange);
+  text-align: center;
+}
+
+.ballotBox{
+  object-fit: contain;
+  width: 280px;
+  border:1px solid var(--bg-orange);
+  border-radius:8px;
+}

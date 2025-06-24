@@ -4,12 +4,14 @@ import { candidatesApi } from './queries/candidates';
 import { signUpApi } from './queries/users';
 import { electionsApi } from './queries/elections';
 import { votersApi } from './queries/voters';
+import { votesApi } from './queries/votes';
 
 const rootReducer = combineReducers({
     [candidatesApi.reducerPath]: candidatesApi.reducer,
     [signUpApi.reducerPath]: signUpApi.reducer,
     [electionsApi.reducerPath]: electionsApi.reducer,
-    [votersApi.reducerPath]: votersApi.reducer
+    [votersApi.reducerPath]: votersApi.reducer,
+    [votesApi.reducerPath]: votesApi.reducer
 });
 
 export const store = configureStore({
@@ -20,4 +22,5 @@ export const store = configureStore({
             .concat(signUpApi.middleware)
             .concat(electionsApi.middleware)
             .concat(votersApi.middleware)
+            .concat(votesApi.middleware)
 });
