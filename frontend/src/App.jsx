@@ -7,6 +7,7 @@ import { CommitteePrivateRoute } from './components/Main/PrivateRoute/committee'
 import { VoterPrivateRoute } from './components/Main/PrivateRoute/voter';
 import { MyProfile } from './pages/Dashboard/Voter/MyProfile';
 import { Register } from './pages/Dashboard/Voter/Register';
+import { Receipt } from './pages/Dashboard/Voter/receipt';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       />
       <Route path="/dashboard/voter/myProfile" element={<MyProfile />} />
       <Route path="/dashboard/voter/register" element={<Register />} />
+      <Route path="/dashboard/voter/receipt" element={<Receipt />} />
     </Routes>
   );
 }

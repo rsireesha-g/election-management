@@ -5,6 +5,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegFileImage } from "react-icons/fa";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const Header = ({ type }) => {
     const [searchParams] = useSearchParams();
@@ -16,7 +17,8 @@ export const Header = ({ type }) => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user_type');
-        Navigate("/")
+        toast.success("User Successfully Logged Out!")
+        setTimeout(() => Navigate("/"), 1500);
     }
     return (
         <header className={styles.header}>

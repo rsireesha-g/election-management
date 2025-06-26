@@ -7,14 +7,14 @@ import {
     useDeleteCandidateDataMutation,
     useGetCandidateDataByElectionTypeQuery,
     useGetCandidateDetailsByIdQuery,
-    useGetCandidatesDataQuery,
     useUpdateCandidateDataMutation
 } from '../../../redux/queries/candidates';
 import { useGetElectionsDataQuery } from '../../../redux/queries/elections';
-import { Modal } from '../../../components/Common/Modal';
 import { TabComponent } from '../../../components/Dashboard/TabComponent';
 import { AddCandidate } from './AddCandidate';
 import { EditCandidate } from './EditCandidate';
+
+import { toast } from 'react-toastify';
 
 const initialData = {
     candidate_name: '',
@@ -26,11 +26,11 @@ const initialData = {
     party: '',
     nomination_location: '',
     email: '',
-    DOB: ''
+    DOB: '',
 }
 
 export const Dashboard = () => {
-    const [activeTab, setActiveTab] = useState('Committee');
+    const [activeTab, setActiveTab] = useState('Candidates');
     const [activeElectionType, setActiveElectionType] = useState('Parliament');
     const { data, error, isLoading } = useGetCandidateDataByElectionTypeQuery(activeElectionType, { skip: !activeElectionType });
     const { data: electionData, error: electionErr, isLoading: ElectionLoading } = useGetElectionsDataQuery();
@@ -40,6 +40,7 @@ export const Dashboard = () => {
 
     const [isAdd, setIsAdd] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModelOpen] = useState(false)
     const [id, setId] = useState();
     const { data: candidate, error: candidateErr, isLoading: candidateLoading } = useGetCandidateDetailsByIdQuery(id, { skip: !id });
     const [addCandidate] = useAddCandidateDataMutation();
@@ -48,10 +49,12 @@ export const Dashboard = () => {
 
     const handleDeleteCandidate = async (id) => {
         try {
-            const res = await deleteCandidate(id)
-            res?.data && alert(res?.data?.message);
+            const res = await deleteCandidate(id).unwrap()
+            toast.success(res?.data?.message);
+            setIsDeleteModelOpen(false);
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            toast.error(err?.data?.message || err?.message || err?.error)
         }
     }
 
@@ -63,29 +66,28 @@ export const Dashboard = () => {
     const handleUpdate = async () => {
         console.log(candidateDetails);
         try {
-            const res = await updateCandidate({ id, candidate: candidateDetails });
-            res?.data && alert(res?.data?.message);
+            const res = await updateCandidate({ id, candidate: candidateDetails }).unwrap();
+            toast.success(res?.data?.message);
             setIsEdit(false);
             setId('');
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            toast.error(err?.data?.message || err?.message || err?.error)
         }
     }
-    // const handleValidations = () => {
-    //     const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
 
-    // }
     const handleAdd = async () => {
-        // const isValidated = handleValidations();
+        // const isValidated = handleValidations();  
         try {
             console.log(candidateDetails);
-            const data = candidateDetails;
-            const res = await addCandidate(data);
-            res?.data && alert(res?.data?.message);
+            const data = { ...candidateDetails, "election_type": activeElectionType };
+            const res = await addCandidate(data).unwrap();
+            toast.success(res?.data?.message);
             setIsAdd(false);
             setId('');
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            toast.error(err?.data?.message || err?.message || err?.error)
         }
     }
 
@@ -95,7 +97,7 @@ export const Dashboard = () => {
             let y = x?.toISOString()?.split("T")?.[0];
             setCandidateDetails({ ...candidate?.[0], "DOB": y });
         }
-    }, [candidate, id]);
+    }, [candidate]);
 
 
     return (
@@ -103,7 +105,7 @@ export const Dashboard = () => {
             <h2 className={styles.title}>Committee Dashboard</h2>
             <TabComponent
                 tabType={'mainTabs'}
-                tabs={['Committee', 'Candidates']}
+                tabs={['Candidates', 'Results']}
                 activeTab={activeTab}
                 handleTabSelect={(tab) => setActiveTab(tab === activeTab ? "" : tab)}
             />
@@ -128,6 +130,8 @@ export const Dashboard = () => {
                 }}
                 handleDelete={handleDeleteCandidate}
                 setIsAdd={() => setIsAdd((prev) => !prev)}
+                isDeleteModalOpen={isDeleteModalOpen}
+                setIsDeleteModelOpen={setIsDeleteModelOpen}
             ></ListingGrid>
 
             {isEdit &&
@@ -137,6 +141,7 @@ export const Dashboard = () => {
                         setIsEdit(false);
                         setCandidateDetails(initialData);
                     }}
+                    isLoading={candidateLoading}
                     candidate={candidateDetails}
                     handleChange={handleChange}
                     handleUpdate={handleUpdate}
@@ -153,7 +158,6 @@ export const Dashboard = () => {
                     activeElectionType={activeElectionType}
                 />
             }
-
         </Layout >
     )
 }

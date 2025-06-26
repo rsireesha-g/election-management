@@ -1,7 +1,7 @@
-import { useState } from "react"
 import styles from "./ListingGrid.module.css"
 import { DeleteCandidate } from "../DeleteConfirmation";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { Loader } from "../../Common/Loader"
 
 export const ListingGrid = ({
     setID,
@@ -12,9 +12,9 @@ export const ListingGrid = ({
     setEdit,
     handleDelete,
     setIsAdd,
-    electionType
+    electionType,
+    isDeleteModalOpen, setIsDeleteModelOpen
 }) => {
-    const [isDeleteModalOpen, setIsDeleteModelOpen] = useState(false);
 
     return (
         <>
@@ -29,7 +29,7 @@ export const ListingGrid = ({
                             <div key={ind} className={styles.tab}>{title}</div>
                         ))}
                     </div>
-                    {isLoading ? <div>Loading...</div>
+                    {isLoading ? <Loader />
                         :
                         <div className={styles.gridInnerComponent}>
                             {data?.map((detail, ind) => (
@@ -71,10 +71,3 @@ export const ListingGrid = ({
     )
 }
 
-/*
-Create a Candidate screen in Committee section
-There will be 3 tabs for 3 different elections
-in each tab there should be a grid which lists all the candidate enrolled in the associated election
-there should be a button on the top right side of the grid, clicking on it will opens a form to add new candidate
-in the last column of the grid there should be a button, clicking on it will opens an edit form which must have corresponding data pre-filled with current data . (the delete button can be beside the edit button or in the edit form)
-*/

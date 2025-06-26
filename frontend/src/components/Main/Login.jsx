@@ -1,9 +1,10 @@
-import { useState } from "react";
-import styles from "./Login.module.css";
+import { useEffect, useState } from "react";
+import styles from "./LoginSignup.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Popup } from "../../Popup";
-import { Modal } from "../../Common/Modal";
+import { Modal } from "../Common/Modal";
+import { toast } from "react-toastify";
+import { Loader } from "../Common/Loader";
 
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
 
 export const Login = ({ onClose, handleExistingAcc }) => {
     const [values, setValues] = useState(initialState);
+    const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState({
         type: '',
         msg: ''
@@ -29,13 +31,9 @@ export const Login = ({ onClose, handleExistingAcc }) => {
         if (message?.msg) setMessage({ type: '', msg: '' })
         setValues({ ...values, [e.target.name]: e.target.value })
     }
-    const validations = () => {
-        const nameRegex = /^[A-Za-z\s]{2,50}$/;
-        const phoneNumberRegex = /^[6-9]\d{9}$/;
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    }
     const handleLogin = async () => {
+        setIsLoading(true);
         if (!values?.email) {
             setMessage({ type: 'email', msg: 'Please, enter your email address' })
         } else if (!values?.password) {
@@ -45,18 +43,28 @@ export const Login = ({ onClose, handleExistingAcc }) => {
                 const response = await axios.post('http://localhost:5000/auth/login', values);
                 console.log(response)
                 if (response.status === 200) {
+                    setIsLoading(false);
                     localStorage.setItem('token', response?.data?.token);
                     localStorage.setItem('user_type', response?.data?.user?.user_type);
                     setMessage({ type: 'success', msg: 'User Login Successful!' });
-                    if (response?.data?.user?.user_type === 'voter') navigate(`/dashboard/voter?user_id=${response?.data?.user?.id}`)
-                    if (response?.data?.user?.user_type === 'committee') navigate("/dashboard/committee")
+                    setTimeout(() => {
+                        if (response?.data?.user?.user_type === 'voter') navigate(`/dashboard/voter?user_id=${response?.data?.user?.id}`)
+                        if (response?.data?.user?.user_type === 'committee') navigate("/dashboard/committee")
+                    }, 1500);
                 }
             } catch (err) {
+                setIsLoading(false);
                 setMessage({ type: 'error', msg: err?.response?.data?.message || err?.message })
                 console.log(err)
             }
         }
     }
+    useEffect(() => {
+        if (message?.msg) {
+            if (message?.type === 'error') toast.error(message?.msg)
+            else toast.success(message?.msg)
+        }
+    }, [message])
     return (
         <Modal>
             <div className={styles.container}>
@@ -92,15 +100,15 @@ export const Login = ({ onClose, handleExistingAcc }) => {
                             onChange={(e) => handleChanges(e)}
                             name='password'
                             type='password'
+                            autoComplete="off"
                             placeholder="Enter your password" />
                         <p className={styles.error}>{message?.type === 'pswd' && message?.msg}</p>
                     </div>
-                    <button className={`primaryButton ${styles.btn}`} onClick={handleLogin}>Login</button>
+                    <button className={`primaryButton ${styles.btn}`} onClick={handleLogin}> {isLoading ? <Loader /> : "Login"}</button>
                 </div>
                 <div className={styles.text}>Don't have an account? <div onClick={handleExistingAcc}>SignUp</div></div>
 
             </div>
-            {message.msg && <Popup message={message} />}
         </Modal>
     )
 }

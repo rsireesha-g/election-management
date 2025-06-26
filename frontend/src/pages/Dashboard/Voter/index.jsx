@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Layout } from "../../../components/Dashboard/Layout"
 import { TabComponent } from "../../../components/Dashboard/TabComponent";
 import { CandidateCard } from "../../../components/Dashboard/Voter/CanidateCard"
@@ -7,11 +7,12 @@ import { useGetElectionsDataQuery } from "../../../redux/queries/elections";
 import { useGetCandidateDataByElectionTypeQuery, useGetCandidateDetailsByVoterIdQuery } from "../../../redux/queries/candidates";
 import { useSearchParams } from "react-router-dom";
 import { useGetVoterDetails } from "../../../redux/hooks/voter";
-import { useCreateVoteMutation, useGetVotesDataQuery } from "../../../redux/queries/votes";
-import { useGetVoterDetailQuery } from "../../../redux/queries/voters";
+import { useCreateVoteMutation } from "../../../redux/queries/votes";
 import styles2 from "../../../components/Dashboard/ListingGrid/ListingGrid.module.css";
 import ballotImg from "../../../assests/dashboard/ballot-box.png";
 import ballotImgSealed from "../../../assests/dashboard/ballot-box-sealed.jpg";
+import { FaFileDownload } from "react-icons/fa";
+import { Loader } from "../../../components/Common/Loader";
 
 export const Dashboard = () => {
     const [searchParams] = useSearchParams();
@@ -70,15 +71,9 @@ export const Dashboard = () => {
         }
         setDraggableItem(null);
     }
-    console.log(!(voterDetails?.[0]?.id), activeTab !== 'Receipt', voterDetails);
 
 
 
-
-    // useEffect(()=>{
-    //  if(activeTab==='Receipt')
-    //    handleGetVoteCastedCandidateDetails()
-    // },[activeTab])
     return (
         <Layout type='voter'>
             <div className={styles.mainTitle}>Welcome Voter!</div>
@@ -101,7 +96,7 @@ export const Dashboard = () => {
                     />
 
                     <div className={styles.displayGrid}>
-                        {isLoading ? <div>Loading...</div> :
+                        {isLoading ? <Loader size={'large'} /> :
                             <div className={styles.cardContainer}>
                                 {data?.map((candidate) => (
                                     <CandidateCard
@@ -120,7 +115,7 @@ export const Dashboard = () => {
                                 {(votedCandidateDetails?.find((ele) => ele.election_type === activeElectionType)) ?
                                     <div>
                                         <img src={ballotImgSealed} className={styles.ballotBox} alt='cast your vote here' />
-                                        <div>Vote has been already casted</div>
+                                        <div>Vote has been already casted for {(votedCandidateDetails?.find((ele) => ele.election_type === activeElectionType))?.candidate_name}</div>
                                     </div>
                                     :
                                     <img src={ballotImg} className={styles.ballotBox} alt='cast your vote here' />
@@ -132,21 +127,23 @@ export const Dashboard = () => {
                 :
                 <>
                     <div className={styles2.gridOuterComponent}>
-                        <div className={styles2.gridComponent}>
-                            {['S.No', 'Candidate Name', 'Election Type', 'Place', 'Party']?.map((title, ind) => (
+                        <div className={`${styles2.gridComponent} ${styles.gridColumn}`}>
+                            {['S.No', 'Candidate Name', 'Election Type', 'Place', 'Party', 'Download']?.map((title, ind) => (
                                 <div key={ind} className={styles2.tab}>{title}</div>
                             ))}
                         </div>
-                        {votedCandidateLoading ? <>Loading...</>
+
+                        {votedCandidateLoading ? <Loader />
                             : <div className={styles2.gridInnerComponent}>
                                 {votedCandidateDetails?.map((detail, ind) => (
-                                    <div className={styles2.gridComponent} key={ind}>
+                                    <div className={`${styles2.gridComponent} ${styles.gridColumn}`} key={ind}>
                                         <div className={styles2.details}>{ind + 1} </div>
                                         <div className={styles2.details} title={detail?.candidate_name}>{detail?.candidate_name} </div>
                                         <div className={styles2.details}>{detail?.election_type} </div>
                                         <div className={styles2.details}>{detail?.nomination_location} </div>
                                         <div className={styles2.details}>{detail?.party} </div>
                                         <div className={`${styles2.details} ${styles2.actions}`}>
+                                            <FaFileDownload className={styles.download} />
                                         </div>
                                     </div>
                                 ))}

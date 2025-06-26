@@ -10,7 +10,7 @@ export const CandidateCard = ({ candidate, disable, handleDragStart }) => {
     console.log(disable)
 
     return (
-        <div className={`${styles.card} ${disable && styles.disable}`} key={candidate?.id}
+        <div className={`${styles.card} ${disable?.id === candidate?.id && styles.disable}`} key={candidate?.id}
             draggable={!disable}
             onDragStart={() => handleDragStart(candidate)}
         >

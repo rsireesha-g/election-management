@@ -1,8 +1,9 @@
-import { useState } from "react";
-import styles from "./Signup.module.css";
+import { useEffect, useState } from "react";
+import styles from "./LoginSignup.module.css";
 import axios from "axios";
-import { Popup } from "../../Popup";
-import { Modal } from "../../Common/Modal";
+import { Modal } from "../Common/Modal";
+import { toast } from "react-toastify";
+import { Loader } from "../Common/Loader";
 
 const initialState = {
     user_name: '',
@@ -13,6 +14,7 @@ const initialState = {
 
 export const Signup = ({ onClose, handleLogin }) => {
     const [values, setValues] = useState(initialState);
+    const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState({
         type: '',
         msg: ''
@@ -28,6 +30,7 @@ export const Signup = ({ onClose, handleLogin }) => {
     }
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         if (!values?.user_name) {
             setMessage({ type: 'name', msg: 'Please, enter your name' })
         }
@@ -40,16 +43,23 @@ export const Signup = ({ onClose, handleLogin }) => {
                 const response = await axios.post('http://localhost:5000/auth/signup', values);
                 console.log(response)
                 if (response.status === 201) {
+                    setIsLoading(false);
                     setMessage({ type: 'success', msg: 'User Registered Successfully!' })
                     handleLogin();
                 }
-                console.log(response)
             } catch (err) {
+                setIsLoading(false);
                 setMessage({ type: 'error', msg: err?.response?.data?.message || err?.message })
-                console.log(err)
             }
         }
     }
+
+    useEffect(() => {
+        if (message?.msg) {
+            if (message?.type === 'error') toast.error(message?.msg)
+            else toast.success(message?.msg)
+        }
+    }, [message])
 
     return (
         <Modal>
@@ -95,15 +105,15 @@ export const Signup = ({ onClose, handleLogin }) => {
                             onChange={(e) => handleChanges(e)}
                             placeholder="Enter your password"
                             type='password'
+                            autoComplete="off"
                             name='password' />
                         <p className={styles.error}>{message?.type === 'pswd' && message?.msg}</p>
                     </div>
-                    <button className={`primaryButton ${styles.btn}`} onClick={handleSubmit}>Sign Up</button>
+                    <button className={`primaryButton ${styles.btn}`} onClick={handleSubmit}>{isLoading ? <Loader /> : "Sign Up"}</button>
                 </div>
                 <div className={styles.text}>Already have an account? <div onClick={handleLogin}>Login</div></div>
 
             </div>
-            {message.msg && <Popup message={message} />}
         </Modal>
     )
 }
