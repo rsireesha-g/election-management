@@ -13,6 +13,7 @@ import ballotImg from "../../../assests/dashboard/ballot-box.png";
 import ballotImgSealed from "../../../assests/dashboard/ballot-box-sealed.jpg";
 import { FaFileDownload } from "react-icons/fa";
 import { Loader } from "../../../components/Common/Loader";
+import { toast } from "react-toastify";
 
 export const Dashboard = () => {
     const [searchParams] = useSearchParams();
@@ -25,7 +26,7 @@ export const Dashboard = () => {
     const { data: electionData, error: electionErr, isLoading: ElectionLoading } = useGetElectionsDataQuery();
     const { data, error, isLoading } = useGetCandidateDataByElectionTypeQuery(activeElectionType, { skip: !activeElectionType });
 
-    const { data: votedCandidateDetails, isLoading: votedCandidateLoading } = useGetCandidateDetailsByVoterIdQuery(
+    const { data: votedCandidateDetails, isLoading: votedCandidateLoading, refetch } = useGetCandidateDetailsByVoterIdQuery(
         voterDetails?.[0]?.id,
         {
             skip:
@@ -42,8 +43,6 @@ export const Dashboard = () => {
     const handleDragStart = (candidate) => {
         if (is_registered) {
             setDraggableItem(candidate);
-        } else {
-            alert("Voter is not registered!")
         }
     }
 
@@ -53,21 +52,31 @@ export const Dashboard = () => {
 
     const handleDragDrop = async (e) => {
         e.preventDefault();
-        try {
-            const election = electionData?.find((ele) => ele.election_type === activeElectionType);
-            const data = {
-                voter_id: Number(voterDetails?.[0]?.id),
-                candidate_id: draggableItem?.id || draggableItem?.ID,
-                election_id: election?.id || election?.ID
+        if (is_registered) {
+            if (draggableItem?.nationality === "Indian") {
+                try {
+                    const election = electionData?.find((ele) => ele.election_type === activeElectionType);
+                    const data = {
+                        voter_id: Number(voterDetails?.[0]?.id),
+                        candidate_id: draggableItem?.id || draggableItem?.ID,
+                        election_id: election?.id || election?.ID
+                    }
+                    console.log(data, electionData?.find((ele) => ele.election_type === activeElectionType), electionData);
+                    let res = await handleCreateVote(data)
+                    console.log(res, 'response')
+                    if (res?.data) {
+                        setList([...list, { ...draggableItem }]);
+                        toast.success("Successfully casted vote");
+                        refetch();
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
+            } else {
+                toast.error("Nationality is not Indian")
             }
-            console.log(data, electionData?.find((ele) => ele.election_type === activeElectionType), electionData);
-            let res = await handleCreateVote(data)
-            console.log(res, 'response')
-            if (res?.data) {
-                setList([...list, { ...draggableItem }]);
-            }
-        } catch (err) {
-            console.log(err)
+        } else {
+            toast.error("Voter not registered")
         }
         setDraggableItem(null);
     }
@@ -101,7 +110,7 @@ export const Dashboard = () => {
                                 {data?.map((candidate) => (
                                     <CandidateCard
                                         candidate={candidate}
-                                        disable={votedCandidateDetails?.find((ele) => ele.election_type === activeElectionType)}
+                                        casted={votedCandidateDetails?.find((ele) => ele.election_type === activeElectionType)}
                                         handleDragStart={() => handleDragStart(candidate)}
                                     />
                                 ))}
@@ -128,26 +137,33 @@ export const Dashboard = () => {
                 <>
                     <div className={styles2.gridOuterComponent}>
                         <div className={`${styles2.gridComponent} ${styles.gridColumn}`}>
-                            {['S.No', 'Candidate Name', 'Election Type', 'Place', 'Party', 'Download']?.map((title, ind) => (
+                            {/* , 'Download' */}
+                            {['S.No', 'Candidate Name', 'Election Type', 'Place', 'Party']?.map((title, ind) => (
                                 <div key={ind} className={styles2.tab}>{title}</div>
                             ))}
                         </div>
 
                         {votedCandidateLoading ? <Loader />
-                            : <div className={styles2.gridInnerComponent}>
-                                {votedCandidateDetails?.map((detail, ind) => (
-                                    <div className={`${styles2.gridComponent} ${styles.gridColumn}`} key={ind}>
-                                        <div className={styles2.details}>{ind + 1} </div>
-                                        <div className={styles2.details} title={detail?.candidate_name}>{detail?.candidate_name} </div>
-                                        <div className={styles2.details}>{detail?.election_type} </div>
-                                        <div className={styles2.details}>{detail?.nomination_location} </div>
-                                        <div className={styles2.details}>{detail?.party} </div>
-                                        <div className={`${styles2.details} ${styles2.actions}`}>
-                                            <FaFileDownload className={styles.download} />
+                            :
+                            ((votedCandidateDetails?.length) === 0 ?
+                                <div>Vote is not yet casted</div>
+                                :
+                                <div className={styles2.gridInnerComponent}>
+                                    {votedCandidateDetails?.map((detail, ind) => (
+                                        <div className={`${styles2.gridComponent} ${styles.gridColumn}`} key={ind}>
+                                            <div className={styles2.details}>{ind + 1} </div>
+                                            <div className={styles2.details} title={detail?.candidate_name}>{detail?.candidate_name} </div>
+                                            <div className={styles2.details}>{detail?.election_type} </div>
+                                            <div className={styles2.details}>{detail?.nomination_location} </div>
+                                            <div className={styles2.details}>{detail?.party} </div>
+                                            {/* <div className={`${styles2.details} ${styles2.actions}`}>
+                                            {/* <FaFileDownload className={styles.download} /> */}
+                                            {/* </div> */}
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))
+                                    }
+                                </div>
+                            )
                         }
                     </div>
                 </>

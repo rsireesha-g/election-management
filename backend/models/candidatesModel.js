@@ -31,10 +31,11 @@ const Candidates = {
         db.query(`SELECT * FROM candidates WHERE election_type=?`, [election_type], callback);
     },
     getCandidatesCountByElectionType: (callback) => {
-        db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.id) AS 'count'  FROM Candidates 
-        JOIN votes ON candidates.id=votes.candidate_id
-        JOIN election ON election.id=votes.election_id
-        GROUP BY votes.election_id,candidates.candidate_name`, callback)
+        db.query(`SELECT Election.election_type,candidates.candidate_name,COUNT(votes.id) AS 'count' 
+        FROM Candidates 
+        LEFT JOIN votes ON candidates.id=votes.candidate_id
+        JOIN Election ON Election.election_type=candidates.election_type
+        GROUP BY Election.election_type,candidates.candidate_name`, callback)
     },
     getCandidatesAgedForParliament: (callback) => {
         const sql = `SELECT candidate_name FROM Candidates WHERE TIMESTAMPDIFF(YEAR, DOB, CURDATE())>50`;

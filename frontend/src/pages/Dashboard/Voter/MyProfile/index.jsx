@@ -5,6 +5,7 @@ import styles from "./index.module.css";
 import { EditVoter } from './EditVoter';
 import { useGetVoterDetails } from '../../../../redux/hooks/voter';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 export const MyProfile = () => {
@@ -30,6 +31,7 @@ export const MyProfile = () => {
         const data = { ...voterDetails?.[0], ["address"]: address?.address || voterDetails?.[0]?.address, ["DOB"]: date, 'email': address?.email };
         try {
             let res = await updateVoterDetails(data);
+            res?.data && toast.success("Profile Updated Successfully!")
             res?.data && setIsEditModalOpen(false);
         } catch (err) {
             console.log(err)

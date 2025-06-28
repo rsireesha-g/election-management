@@ -5,7 +5,7 @@ export const VoterPrivateRoute = ({ children }) => {
     const type = localStorage.getItem('user_type');
 
     if (!token || type !== 'voter') {
-        return <Navigate to="/login" />
+        return <Navigate to="/" replace />
     }
     return children
 

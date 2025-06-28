@@ -1,17 +1,16 @@
 import styles from "./index.module.css";
 import { BsPersonCircle } from "react-icons/bs";
 
-export const CandidateCard = ({ candidate, disable, handleDragStart }) => {
+export const CandidateCard = ({ candidate, casted, handleDragStart }) => {
     let dob = (new Date(candidate?.DOB));
     let date = dob?.toISOString()?.split("T")?.[0];
     const currYear = (new Date()).getFullYear();
     let dobYear = (new Date(candidate?.DOB)).getFullYear();
     const age = currYear - dobYear;
-    console.log(disable)
 
     return (
-        <div className={`${styles.card} ${disable?.id === candidate?.id && styles.disable}`} key={candidate?.id}
-            draggable={!disable}
+        <div className={`${styles.card} ${casted?.id === candidate?.id && styles.disable}`} key={candidate?.id}
+            draggable={!(casted)}
             onDragStart={() => handleDragStart(candidate)}
         >
             <div className={styles.gridProfile}>

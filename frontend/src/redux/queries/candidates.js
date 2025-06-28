@@ -39,7 +39,11 @@ export const candidatesApi = createApi({
             providesTags: ['candidates']
         }),
         getCandidateDetailsByVoterId: builder.query({
-            query: (voter_id) => `/candidates/byVoter/${voter_id}`
+            query: (voter_id) => `/candidates/byVoter/${voter_id}`,
+            invalidatesTags: ['candidates']
+        }),
+        getVotersCountForCandidatesByElection: builder.query({
+            query: () => `/candidates/count/byCandidate/byElection`
         })
     }),
 });
@@ -51,5 +55,6 @@ export const {
     useUpdateCandidateDataMutation,
     useDeleteCandidateDataMutation,
     useGetCandidateDataByElectionTypeQuery,
-    useGetCandidateDetailsByVoterIdQuery
+    useGetCandidateDetailsByVoterIdQuery,
+    useGetVotersCountForCandidatesByElectionQuery
 } = candidatesApi;

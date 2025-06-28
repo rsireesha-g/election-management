@@ -5,6 +5,7 @@ import styles from "./index.module.css"
 import { useEffect, useState } from 'react'
 import { useCreateVoterMutation, useGetVoterDetailQuery } from '../../../../redux/queries/voters'
 import { useGetVoterDetails } from '../../../../redux/hooks/voter'
+import { toast } from 'react-toastify'
 
 const initialData = {
     voter_name: '',
@@ -36,8 +37,11 @@ export const Register = () => {
         const age = currYear - dobYear;
         if (details?.nationality === "Indian" && age > 18) {
             return true
+        } else {
+            toast.error("Either Nationality is not Indian or age<18")
+            return false
+
         }
-        return false
     }
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -45,6 +49,7 @@ export const Register = () => {
             try {
                 console.log('first');
                 let res = await createVoter({ ...details, is_registered: true, user_id: user_id });
+                res?.data && toast.success("Registration Successful")
                 res?.data && setIsReg(true)
             } catch (err) {
                 console.log(err)
@@ -64,7 +69,7 @@ export const Register = () => {
         <Layout type='voter'>
             <h2 className={styles.title}>Welcome {data?.user_name || 'Voter'}!</h2>
             <h4 >Please, register your details.</h4>
-            {(is_registered || is_reg) ?
+            {(is_registered) ?
                 <div className={styles.message}>Already Registered!</div>
                 :
                 <form className={styles.form} onSubmit={(e) => handleRegister(e)}>

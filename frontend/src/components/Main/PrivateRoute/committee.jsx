@@ -5,8 +5,7 @@ export const CommitteePrivateRoute = ({ children }) => {
     const type = localStorage.getItem('user_type');
 
     if (!token || type !== 'committee') {
-        return <Navigate to="/login" />
+        return <Navigate to="/" replace />
     }
     return children
-
 }

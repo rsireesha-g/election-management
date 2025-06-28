@@ -7,6 +7,7 @@ import {
     useDeleteCandidateDataMutation,
     useGetCandidateDataByElectionTypeQuery,
     useGetCandidateDetailsByIdQuery,
+    useGetVotersCountForCandidatesByElectionQuery,
     useUpdateCandidateDataMutation
 } from '../../../redux/queries/candidates';
 import { useGetElectionsDataQuery } from '../../../redux/queries/elections';
@@ -15,6 +16,7 @@ import { AddCandidate } from './AddCandidate';
 import { EditCandidate } from './EditCandidate';
 
 import { toast } from 'react-toastify';
+import { Result } from './Result';
 
 const initialData = {
     candidate_name: '',
@@ -44,6 +46,7 @@ export const Dashboard = () => {
     const [id, setId] = useState();
     const { data: candidate, error: candidateErr, isLoading: candidateLoading } = useGetCandidateDetailsByIdQuery(id, { skip: !id });
     const [addCandidate] = useAddCandidateDataMutation();
+    const { data: resultsData, isLoading: resultsLoading } = useGetVotersCountForCandidatesByElectionQuery({ skip: activeElectionType !== "Results" });
 
     const [candidateDetails, setCandidateDetails] = useState(initialData);
 
@@ -117,46 +120,52 @@ export const Dashboard = () => {
                     setActiveElectionType(activeElectionType === type ? '' : type)
                 }}
             />
-            <ListingGrid
-                electionType={activeElectionType}
-                headings={['S.No', 'Name', 'Place', 'Party', 'Actions']}
-                data={data || []}
-                isLoading={isLoading}
-                id={id}
-                setID={setId}
-                setEdit={(id) => {
-                    setId(id)
-                    setIsEdit(true)
-                }}
-                handleDelete={handleDeleteCandidate}
-                setIsAdd={() => setIsAdd((prev) => !prev)}
-                isDeleteModalOpen={isDeleteModalOpen}
-                setIsDeleteModelOpen={setIsDeleteModelOpen}
-            ></ListingGrid>
+            {activeTab === 'Candidates' ?
+                <>
+                    <ListingGrid
+                        electionType={activeElectionType}
+                        headings={['S.No', 'Name', 'Place', 'Party', 'Actions']}
+                        data={data || []}
+                        isLoading={isLoading}
+                        id={id}
+                        setID={setId}
+                        setEdit={(id) => {
+                            setId(id)
+                            setIsEdit(true)
+                        }}
+                        handleDelete={handleDeleteCandidate}
+                        setIsAdd={() => setIsAdd((prev) => !prev)}
+                        isDeleteModalOpen={isDeleteModalOpen}
+                        setIsDeleteModelOpen={setIsDeleteModelOpen}
+                    ></ListingGrid>
 
-            {isEdit &&
-                <EditCandidate
-                    onClose={() => {
-                        setId();
-                        setIsEdit(false);
-                        setCandidateDetails(initialData);
-                    }}
-                    isLoading={candidateLoading}
-                    candidate={candidateDetails}
-                    handleChange={handleChange}
-                    handleUpdate={handleUpdate}
-                />
-            }
+                    {isEdit &&
+                        <EditCandidate
+                            onClose={() => {
+                                setId();
+                                setIsEdit(false);
+                                setCandidateDetails(initialData);
+                            }}
+                            isLoading={candidateLoading}
+                            candidate={candidateDetails}
+                            handleChange={handleChange}
+                            handleUpdate={handleUpdate}
+                        />
+                    }
 
-            {isAdd &&
-                <AddCandidate
-                    onClose={() => {
-                        setIsAdd(false)
-                    }}
-                    handleAdd={handleAdd}
-                    handleChange={handleChange}
-                    activeElectionType={activeElectionType}
-                />
+                    {isAdd &&
+                        <AddCandidate
+                            onClose={() => {
+                                setIsAdd(false)
+                            }}
+                            handleAdd={handleAdd}
+                            handleChange={handleChange}
+                            activeElectionType={activeElectionType}
+                        />
+                    }
+                </>
+                :
+                <Result {...{ electionData, activeElectionType, resultsData, resultsLoading }} />
             }
         </Layout >
     )
